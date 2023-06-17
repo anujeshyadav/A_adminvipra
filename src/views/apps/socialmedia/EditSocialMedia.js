@@ -1,80 +1,87 @@
 import React, { Component } from "react";
 import {
   Card,
-  CardHeader,
-  CardTitle,
   CardBody,
   Row,
   Col,
   Form,
   Label,
   Input,
+  CustomInput,
   Button,
   Breadcrumb,
   BreadcrumbItem,
 } from "reactstrap";
-import axiosConfig from "../../../../axiosConfig";
-import { EditorState, convertToRaw } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import draftToHtml from "draftjs-to-html";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "../../../../assets/scss/plugins/extensions/editor.scss";
 // import axiosConfig from "../../../../axiosConfig";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 import { Route } from "react-router-dom";
-
-export default class EditPrivacyPolicy extends Component {
+// import { EditorState, convertToRaw } from "draft-js";
+// import { Editor } from "react-draft-wysiwyg";
+// import draftToHtml from "draftjs-to-html";
+import "react-toastify/dist/ReactToastify.css";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+// import "../../../../assets/scss/plugins/extensions/editor.scss";
+export default class EditSocialMedia extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
+      blog_title: "",
       desc: "",
-      editorState: "",
-      editorState: EditorState.createEmpty(),
+      blogcategory: "",
+      blogImg: "",
+      //   editorState: EditorState.createEmpty(),
+
+      selectedFile: undefined,
+      selectedName: "",
+    };
+    this.state = {
+      categoryB: [],
     };
   }
-  uploadImageCallBack = (file) => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", "https://api.imgur.com/3/image");
-      xhr.setRequestHeader("Authorization", "Client-ID 7e1c3e366d22aa3");
-      const data = new FormData();
-      data.append("image", file);
-      xhr.send(data);
-      xhr.addEventListener("load", () => {
-        const response = JSON.parse(xhr.responseText);
-        resolve(response);
-      });
-      xhr.addEventListener("error", () => {
-        const error = JSON.parse(xhr.responseText);
-        reject(error);
-      });
-    });
-  };
-
-  onEditorStateChange = (editorState) => {
-    this.setState({
-      editorState,
-      desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    });
-  };
-  componentDidMount() {
-    let { id } = this.props.match.params;
-    axiosConfig
-      .get(`/admin/getonePrivcyPlcy/${id}`)
-      .then((response) => {
-        console.log(response.data.data);
-        this.setState({ title: response.data.data.title });
-        // this.setState({ editorState: response.data.data.desc });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  //   onEditorStateChange = (editorState) => {
+  //     this.setState({
+  //       editorState,
+  //       desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
+  //     });
+  //   };
+  // componentDidMount() {
+  async componentDidMount() {
+    // axiosConfig
+    //   .get("admin/all_blog_category")
+    //   .then((response) => {
+    //     console.log(response);
+    //     this.setState({
+    //       categoryB: response.data.data,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    // let { id } = this.props.match.params;
+    // axiosConfig
+    //   .get(`admin/viewoneBlog/${id}`)
+    //   .then((response) => {
+    //     console.log(response);
+    //     this.setState({
+    //       blog_title: response.data.data.blog_title,
+    //       desc: response.data.data.desc,
+    //       img: response.data.data.img,
+    //       blogcategory: response.data.data.blogcategory,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
   onChangeHandler = (event) => {
     this.setState({ selectedFile: event.target.files[0] });
     this.setState({ selectedName: event.target.files[0].name });
     console.log(event.target.files[0]);
+  };
+  onChangeHandler = (event) => {
+    this.setState({ selectedFile: event.target.files });
+    this.setState({ selectedName: event.target.files.name });
+    console.log(event.target.files);
   };
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
@@ -83,39 +90,38 @@ export default class EditPrivacyPolicy extends Component {
   changeHandler = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
+
   submitHandler = (e) => {
     e.preventDefault();
-    console.log(this.state);
+    const data = new FormData();
+    data.append("blog_title", this.state.blog_title);
+    data.append("desc", this.state.desc);
+    data.append("blogcategory", this.state.blogcategory);
 
-    // const data = new FormData();
-    // data.append("banner_title", this.state.banner_title);
-    // data.append("status", this.state.status);
-
-    // data.append("banner_img", this.state.selectedFile, this.state.selectedName);
-
+    for (const file of this.state.selectedFile) {
+      if (this.state.selectedFile !== null) {
+        data.append("blogImg", file, file.name);
+      }
+    }
     // for (var value of data.values()) {
     //   console.log(value);
     // }
-
     // for (var key of data.keys()) {
     //   console.log(key);
     // }
-    let { id } = this.props.match.params;
-    axiosConfig
-      // .post(`/editsize/${id}`, this.state)
-      .post(`/admin/editPrivcyPlcy/${id}`, this.state)
+    // let { id } = this.props.match.params;
+    // axiosConfig
+    //   .post(`admin/edit_blog_cat/${id}`, data)
 
-      .then((response) => {
-        console.log(response.data);
+    //   .then((response) => {
+    //     console.log(response.data);
 
-        swal("Success!", "Submitted SuccessFull!", "success");
-        this.props.history.push(
-          "/app/pagesetup/privacypolicy/privacyPolicyList"
-        );
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    //     swal("Success!", "Submitted SuccessFull!", "success");
+    //     this.props.history.push("/app/blogmngment/blog/blogList");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error.response.data);
+    //   });
   };
 
   render() {
@@ -128,13 +134,10 @@ export default class EditPrivacyPolicy extends Component {
                 <BreadcrumbItem href="/analyticsDashboard" tag="a">
                   Home
                 </BreadcrumbItem>
-                <BreadcrumbItem
-                  href="/app/pagesetup/privacypolicy/privacyPolicyList"
-                  tag="a"
-                >
-                  Privacy Policy List
+                <BreadcrumbItem href="/app/blogmngment/blog/blogList" tag="a">
+                  Blog List
                 </BreadcrumbItem>
-                <BreadcrumbItem active>Edit Privacy Policy</BreadcrumbItem>
+                <BreadcrumbItem active>Edit Blog</BreadcrumbItem>
               </Breadcrumb>
             </div>
           </Col>
@@ -143,7 +146,7 @@ export default class EditPrivacyPolicy extends Component {
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-                Edit Privacy Policy
+                Edit Blog
               </h1>
             </Col>
             <Col>
@@ -153,7 +156,7 @@ export default class EditPrivacyPolicy extends Component {
                     className=" btn btn-danger float-right"
                     onClick={() =>
                       history.push(
-                        "/app/pagesetup/privacypolicy/privacyPolicyList"
+                        "/app/size/sizeList/app/blogmngment/blog/blogList"
                       )
                     }
                   >
@@ -171,16 +174,42 @@ export default class EditPrivacyPolicy extends Component {
                   <Input
                     required
                     type="text"
-                    name="title"
+                    name="blog_title"
                     placeholder=""
-                    value={this.state.title}
+                    value={this.state.blog_title}
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
-                <Row></Row>
+                <Col lg="4" md="4" sm="4" className="mb-2">
+                  <Label>Blog Image</Label>
+
+                  <CustomInput
+                    type="file"
+                    // multiple
+                    onChange={this.onChangeHandler}
+                  />
+                </Col>
+
+                <Col lg="6" md="6" sm="6" className="mb-2">
+                  <Label>Blog Category</Label>
+
+                  <CustomInput
+                    type="select"
+                    name="blogcategory"
+                    value={this.state.blogcategory}
+                    onChange={this.changeHandler}
+                  >
+                    <option>select blog category</option>
+                    {this.state.categoryB?.map((allCategory) => (
+                      <option value={allCategory?._id} key={allCategory?._id}>
+                        {allCategory?.name}
+                      </option>
+                    ))}
+                  </CustomInput>
+                </Col>
                 <Col lg="12" md="12" sm="12" className="mb-2">
                   <Label>Description</Label>
-                  <Editor
+                  {/* <Editor
                     toolbarClassName="demo-toolbar-absolute"
                     wrapperClassName="demo-wrapper"
                     editorClassName="demo-editor"
@@ -219,7 +248,7 @@ export default class EditPrivacyPolicy extends Component {
                         className: "bordered-option-classname",
                       },
                     }}
-                  />
+                  /> */}
                   <br />
                 </Col>
               </Row>

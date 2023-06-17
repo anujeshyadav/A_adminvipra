@@ -10,114 +10,119 @@ import {
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
+  CustomInput,
 } from "reactstrap";
-import axiosConfig from "../../../../axiosConfig";
-import { ContextLayout } from "../../../../utility/context/Layout";
+import axiosConfig from "../../../axiosConfig";
+import axios from "axios";
+import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
-import ReactHtmlParser from "react-html-parser";
-
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
 //import classnames from "classnames";
-import { history } from "../../../../history";
-import "../../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
-import "../../../../assets/scss/pages/users.scss";
+import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
+import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
-class FaqList extends React.Component {
+import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
+
+class SocialMedia extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
     currenPageSize: "",
     getPageSize: "",
+    select_sslmedia: "",
+    url: "",
     defaultColDef: {
       sortable: true,
       editable: true,
       resizable: true,
       suppressMenu: true,
+      inputList: "",
     },
-
     columnDefs: [
       {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
         width: 100,
-        // filter: true,
+        filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
 
       {
-        headerName: "Title",
-        field: "title",
-        // filter: true,
-        width: 250,
-        // pinned: window.innerWidth > 992 ? "left" : false,
+        headerName: "Media Name",
+        field: "mediaName",
+        filter: true,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.title}</span>
+              <span>{params.data.select_sslmedia}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Description",
-        field: "desc",
-        // filter: true,
-        width: 500,
-        // pinned: window.innerWidth > 992 ? "left" : false,
+        headerName: "Link",
+        field: "astrologername",
+        filter: true,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span> {ReactHtmlParser(params.data.desc)}</span>
-              {/* <span>{params.data.desc}</span> */}
+              <span>{params.data.url}</span>
             </div>
           );
         },
       },
-      //   {
-      //     headerName: "Status",
-      //     field: "status",
-      //     // filter: true,
-      //     width: 130,
-      //     cellRendererFramework: (params) => {
-      //       return params.value === "Active" ? (
-      //         <div className="badge badge-pill badge-success">
-      //           {params.data.status}
-      //         </div>
-      //       ) : params.value === "Deactive" ? (
-      //         <div className="badge badge-pill badge-warning">
-      //           {params.data.status}
-      //         </div>
-      //       ) : null;
-      //     },
-      //   },
 
       {
-        headerName: "Actions",
+        headerName: "Status",
+        field: "reason",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.mobile}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Action",
         field: "sortorder",
-        width: 150,
-        // pinned: window.innerWidth > 992 ? "right" : false,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              {/* <Route
+              <Route
+                render={({ history }) => (
+                  <Eye
+                    className="mr-50"
+                    size="25px"
+                    color="green"
+                    onClick={() =>
+                      history.push(
+                        `/app/userride/viewUserRide/${params.data._id}`
+                      )
+                    }
+                  />
+                )}
+              />
+              <Route
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
                     size="25px"
                     color="blue"
-                    onClick={() =>
-                      history.push(
-                        `/app/pagesetup/banner/EditBanner/${params.data._id}`
-                      )
-                    }
+                    onClick={() => history.push("/app/userride/editUserRide")}
                   />
                 )}
-              /> */}
-
+              />
               <Trash2
                 className="mr-50"
                 size="25px"
@@ -134,17 +139,34 @@ class FaqList extends React.Component {
       },
     ],
   };
+  handleSelect = (e) => {
+    this.setState({ select_sslmedia: e.target.value });
+  };
+  handleAdd = async () => {
+    let payload = {
+      select_sslmedia: this.state.select_sslmedia,
+      url: this.state.url,
+    };
 
-  async componentDidMount() {
-    await axiosConfig.get("/admin/faq_list", {}).then((response) => {
-      const rowData = response.data.data;
-      console.log(rowData);
+    await axiosConfig.post("/admin/add_SocialMedia", payload);
+    this.getAllData();
+    this.setState({ url: "" });
+  };
+  changeHandler = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+  getAllData = async () => {
+    await axiosConfig.get("/admin/get_socalList").then((response) => {
+      let rowData = response.data.data;
       this.setState({ rowData });
     });
+  };
+  componentDidMount() {
+    this.getAllData();
   }
+
   async runthisfunction(id) {
-    console.log(id);
-    await axiosConfig.get(`admin/dltFaq/${id}`).then(
+    await axiosConfig.get(`/admin/dlt_socailMedia/${id}`).then(
       (response) => {
         console.log(response);
       },
@@ -162,11 +184,9 @@ class FaqList extends React.Component {
       totalPages: this.gridApi.paginationGetTotalPages(),
     });
   };
-
   updateSearchQuery = (val) => {
     this.gridApi.setQuickFilter(val);
   };
-
   filterSize = (val) => {
     if (this.gridApi) {
       this.gridApi.paginationSetPageSize(Number(val));
@@ -176,32 +196,52 @@ class FaqList extends React.Component {
       });
     }
   };
-
   render() {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
-      console.log(rowData),
-      (
+      <div>
+        <Breadcrumbs
+          breadCrumbTitle="Social Media "
+          breadCrumbParent="Home"
+          breadCrumbActive="Social Media "
+        />
+
         <Row className="app-user-list">
           <Col sm="12"></Col>
           <Col sm="12">
             <Card>
               <Row className="m-2">
                 <Col>
-                  <h1 sm="6" className="float-left">
-                    FAQ List
-                  </h1>
+                  <CustomInput
+                    type="select"
+                    name="select_sslmedia"
+                    onChange={(e) => this.handleSelect(e)}
+                  >
+                    <option>Select Option</option>
+                    <option>Facebook</option>
+                    <option>Twitter</option>
+                    <option>Instagram</option>
+                    <option>Youtube</option>
+                  </CustomInput>
+                </Col>
+                <Col>
+                  <Input
+                    required
+                    type="text"
+                    name="url"
+                    placeholder=""
+                    value={this.state.url}
+                    onChange={this.changeHandler}
+                  />
                 </Col>
                 <Col>
                   <Route
-                    render={({ history }) => (
+                    render={() => (
                       <Button
-                        className="btn btn-success float-right"
-                        onClick={() =>
-                          history.push("/app/pagesetup/faq/addFaq")
-                        }
+                        className=" btn btn-success"
+                        onClick={this.handleAdd}
                       >
-                        Add FAQ
+                        Add
                       </Button>
                     )}
                   />
@@ -302,8 +342,8 @@ class FaqList extends React.Component {
             </Card>
           </Col>
         </Row>
-      )
+      </div>
     );
   }
 }
-export default FaqList;
+export default SocialMedia;

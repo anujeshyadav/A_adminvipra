@@ -8,6 +8,12 @@ import knowledgeBaseCategory from "./views/pages/knowledge-base/Category";
 import knowledgeBaseQuestion from "./views/pages/knowledge-base/Questions";
 import { ContextLayout } from "./utility/context/Layout";
 
+// socialMedia
+const SocialMedia = lazy(() => import("./views/apps/socialmedia/SocialMedia"));
+const EditSocialMedia = lazy(() =>
+  import("./views/apps/socialmedia/EditSocialMedia")
+);
+
 // event
 const BannerPoojaList = lazy(() =>
   import("./views/apps/event/bennerPooja/BannerPoojaList")
@@ -241,6 +247,7 @@ const ViewHoroscopes = lazy(() =>
 
 const UserChatList = lazy(() => import("./views/apps/chat/UserChatList"));
 const ChatList = lazy(() => import("./views/apps/chat/ChatList"));
+const Chathistory = lazy(() => import("./views/apps/chat/Chatpage"));
 
 const AstrologerProduct = lazy(() =>
   import("./views/apps/productmanager/AstrologerProduct")
@@ -570,6 +577,10 @@ const accessControl = lazy(() =>
 
 const otpVerify = lazy(() => import("./views/pages/authentication/OtpVerify"));
 const otpScreen = lazy(() => import("./views/pages/authentication/OtpScreen"));
+const Addpackage = lazy(() => import("./views/apps/AddPackage/AddPackage"));
+const AddYoutubeVideo = lazy(() =>
+  import("../src/views/apps/VideoYoutube/Youtube")
+);
 
 // Set Layout and Component Using App Route
 const RouteConfig = ({ component: Component, fullLayout, ...rest }) => (
@@ -635,6 +646,7 @@ class AppRouter extends React.Component {
             <AppRoute path="/app/user/addUser" component={AddUser} />
             <AppRoute path="/app/user/editUser/:id" component={EditUser} />
             <AppRoute path="/app/user/viewUser/:id" component={ViewUser} />
+            <AppRoute path="/app/user/addpackage" component={Addpackage} />
             {/* Astrologer dashboard list */}
             <AppRoute
               path="/app/dashboardlist/todayastrologerlist"
@@ -680,6 +692,11 @@ class AppRouter extends React.Component {
               path="/app/event/bookEvent/editBookEvent/:id"
               component={EditBookEvent}
             />
+            <AppRoute path="/app/media/socialmedia" component={SocialMedia} />
+            <AppRoute
+              path="/app/media/editsocialmedia/:id"
+              component={EditSocialMedia}
+            />
             <AppRoute
               path="/app/event/bookEvent/viewBookEvent/:id"
               component={ViewBookEvent}
@@ -699,6 +716,7 @@ class AppRouter extends React.Component {
               path="/app/kundlimanage/kundliuserdetail"
               component={KundliUserDetail}
             />
+            <AppRoute path="/app/youtubevideoadd" component={AddYoutubeVideo} />
             {/* Start Horoscopes  */}
             <AppRoute
               path="/app/horoscopes/horoscopesList"
@@ -718,6 +736,11 @@ class AppRouter extends React.Component {
             />
             {/* Start Horoscopes*/}
             <AppRoute path="/app/chat/chatList" component={ChatList} />
+            <AppRoute
+              path="/app/chat/Chathistory"
+              component={Chathistory}
+              fullLayout
+            />
             <AppRoute
               path="/app/horoscopecategory/horoscopeCategoryList"
               component={HoroscopeCategoryList}
@@ -864,6 +887,14 @@ class AppRouter extends React.Component {
               path="/app/poojapackage/packageList"
               component={PackageList}
             />
+            <AppRoute
+              path="/app/poojapackage/editPackage/:id"
+              component={EditPackage}
+            />
+            {/* <AppRoute
+              path="/app/poojapackage/editPackage/:id"
+              component={EditPackage}
+            /> */}
             <AppRoute
               path="/app/poojapackage/addPackage"
               component={AddPackage}

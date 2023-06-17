@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import {
   Card,
   CardBody,
@@ -9,130 +9,137 @@ import {
   Label,
   Button,
   CustomInput,
-} from 'reactstrap'
-import draftToHtml from 'draftjs-to-html'
-import { Editor } from 'react-draft-wysiwyg'
-import { EditorState, convertToRaw } from 'draft-js'
-import axiosConfig from '../../../../axiosConfig'
-import 'react-toastify/dist/ReactToastify.css'
-import { Route } from 'react-router-dom'
-import Breadcrumbs from '../../../../components/@vuexy/breadCrumbs/BreadCrumb'
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import '../../../../assets/scss/plugins/extensions/editor.scss'
-import { data } from 'jquery'
+} from "reactstrap";
+import draftToHtml from "draftjs-to-html";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw } from "draft-js";
+import axiosConfig from "../../../../axiosConfig";
+import "react-toastify/dist/ReactToastify.css";
+import { Route } from "react-router-dom";
+import Breadcrumbs from "../../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import "../../../../assets/scss/plugins/extensions/editor.scss";
+import { data } from "jquery";
+import swal from "sweetalert";
 export class AddProduct extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      title: '',
-      productname: '',
-      category: '',
-      image: '',
-      desc: '',
-      price: '',
-      limit: '',
+      title: "",
+      productname: "",
+      category: "",
+      image: "",
+      desc: "",
+      qsCount: "",
+      price: "",
+      limit: "",
       selectedFile: undefined,
-      selectedName: '',
-      status: '',
+      selectedName: "",
+      status: "",
       editorState: EditorState.createEmpty(),
-    }
+    };
     this.state = {
       categoryP: [],
-    }
+    };
   }
 
   onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files[0] })
-    this.setState({ selectedName: event.target.files[0].name })
-    console.log(event.target.files[0])
-  }
+    this.setState({ selectedFile: event.target.files[0] });
+    this.setState({ selectedName: event.target.files[0].name });
+    console.log(event.target.files[0]);
+  };
   onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files })
-    this.setState({ selectedName: event.target.files.name })
-    console.log(event.target.files)
-  }
+    this.setState({ selectedFile: event.target.files });
+    this.setState({ selectedName: event.target.files.name });
+    console.log(event.target.files);
+  };
   uploadImageCallBack = (file) => {
     return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest()
-      xhr.open('POST', 'https://api.imgur.com/3/image')
-      xhr.setRequestHeader('Authorization', 'Client-ID 7e1c3e366d22aa3')
-      const data = new FormData()
-      data.append('image', file)
-      xhr.send(data)
-      xhr.addEventListener('load', () => {
-        const response = JSON.parse(xhr.responseText)
-        resolve(response)
-      })
-      xhr.addEventListener('error', () => {
-        const error = JSON.parse(xhr.responseText)
-        reject(error)
-      })
-    })
-  }
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://api.imgur.com/3/image");
+      xhr.setRequestHeader("Authorization", "Client-ID 7e1c3e366d22aa3");
+      const data = new FormData();
+      data.append("image", file);
+      xhr.send(data);
+      xhr.addEventListener("load", () => {
+        const response = JSON.parse(xhr.responseText);
+        resolve(response);
+      });
+      xhr.addEventListener("error", () => {
+        const error = JSON.parse(xhr.responseText);
+        reject(error);
+      });
+    });
+  };
 
   onEditorStateChange = (editorState) => {
     this.setState({
       editorState,
       desc: draftToHtml(convertToRaw(editorState.getCurrentContent())),
-    })
-  }
+    });
+  };
 
   changeHandler1 = (e) => {
-    this.setState({ status: e.target.value })
-  }
+    this.setState({ status: e.target.value });
+  };
 
   changeHandler = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
-  }
+    this.setState({ [e.target.name]: e.target.value });
+  };
   async componentDidMount() {
     axiosConfig
-      .get('/admin/getproductcalegory')
+      .get("/admin/getproductcalegory")
       .then((response) => {
-        console.log(response)
+        console.log(response);
         this.setState({
           categoryP: response.data.data,
-        })
+        });
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
   }
   submitHandler = (e) => {
-    e.preventDefault()
-    const data = new FormData()
-    data.append('title', this.state.title)
-    data.append('productname', this.state.productname)
-    data.append('category', this.state.category)
-    data.append('desc', this.state.desc)
-    data.append('price', this.state.price)
-    data.append('limit', this.state.limit)
+    e.preventDefault();
+    const data = new FormData();
+    data.append("title", this.state.title);
+    data.append("productname", this.state.productname);
+    data.append("category", this.state.category);
+    data.append("desc", this.state.desc);
+    data.append("price", this.state.price);
+    data.append("qsCount", this.state.qsCount);
+    // data.append("limit", this.state.limit);
 
-    data.append('status', this.state.status)
+    data.append("status", this.state.status);
 
     for (const file of this.state.selectedFile) {
       if (this.state.selectedFile !== null) {
-        data.append('image', file, file.name)
+        data.append("image", file);
       }
     }
-    for (var value of data.values()) {
-      console.log(value)
-    }
-    for (var key of data.keys()) {
-      console.log(key)
-    }
+    // for (var value of data.values()) {
+    //   console.log(value);
+    // }
+    // for (var key of data.keys()) {
+    //   console.log(key);
+    // }
 
     axiosConfig
       .post(`/admin/addProduct`, data)
       .then((response) => {
-        console.log(response.data)
-        alert('Product Added Successful')
-        this.props.history.push('/app/productmanager/product/productList')
+        console.log(response.data);
+        swal("Product Added Successful");
+        this.props.history.push("/app/productmanager/product/productList");
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
 
+  // blockInvalidChar = (e) => {
+  //   e.target.value > 50 ||
+  //     (["e", "E", "+", "-"].includes(e.key) && e.preventDefault());
+  // };
   render() {
     return (
       <div>
@@ -154,7 +161,7 @@ export class AddProduct extends Component {
                   <Button
                     className=" btn btn-danger float-right"
                     onClick={() =>
-                      history.push('/app/productmanager/product/productList')
+                      history.push("/app/productmanager/product/productList")
                     }
                   >
                     Back
@@ -177,6 +184,7 @@ export class AddProduct extends Component {
                     onChange={this.changeHandler}
                   ></Input>
                 </Col>
+
                 <Col lg="4" md="4" sm="4" className="mb-2">
                   <Label>Product Name</Label>
                   <Input
@@ -216,38 +224,30 @@ export class AddProduct extends Component {
                   ></Input>
                 </Col>
                 <Col lg="4" md="4" sm="4" className="mb-2">
-                  <Label>limit</Label>
+                  <Label>Set No of Question </Label>
                   <Input
                     required
-                    type="select"
+                    type="number"
+                    name="qsCount"
+                    placeholder="Enter No of Question "
+                    value={this.state.qsCount}
+                    onChange={this.changeHandler}
+                  />
+                </Col>
+                {/* <Col lg="4" md="4" sm="4" className="mb-2">
+                  <Label> * Limit(50)</Label>
+                  <Input
+                    required
+                    type="number"
                     name="limit"
-                    placeholder="Enter limit"
+                    onKeyDown={this.blockInvalidChar}
+                    min="0"
+                    max="50"
+                    placeholder="Enter limit max is 50"
                     value={this.state.limit}
                     onChange={this.changeHandler}
-                  >
-                    <option>Select Question Limit</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                    <option>13</option>
-                    <option>14</option>
-                    <option>15</option>
-                    <option>16</option>
-                    <option>17</option>
-                    <option>18</option>
-                    <option>19</option>
-                    <option>20</option>
-                  </Input>
-                </Col>
+                  />
+                </Col> */}
                 <Col lg="4" md="4" sm="4" className="mb-2">
                   <Label>Thumnail Image</Label>
 
@@ -289,20 +289,20 @@ export class AddProduct extends Component {
                   onChange={(e) => this.changeHandler1(e)}
                 >
                   <input
-                    style={{ marginRight: '3px' }}
+                    style={{ marginRight: "3px" }}
                     type="radio"
                     name="status"
                     value="Active"
                   />
-                  <span style={{ marginRight: '20px' }}>Active</span>
+                  <span style={{ marginRight: "20px" }}>Active</span>
 
                   <input
-                    style={{ marginRight: '3px' }}
+                    style={{ marginRight: "3px" }}
                     type="radio"
                     name="status"
                     value="Inactive"
                   />
-                  <span style={{ marginRight: '3px' }}>Inactive</span>
+                  <span style={{ marginRight: "3px" }}>Inactive</span>
                 </div>
               </Col>
               <Row>
@@ -320,7 +320,7 @@ export class AddProduct extends Component {
           </CardBody>
         </Card>
       </div>
-    )
+    );
   }
 }
-export default AddProduct
+export default AddProduct;
