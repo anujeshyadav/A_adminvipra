@@ -21,6 +21,8 @@ class AnalyticsDashboard extends React.Component {
       AstroCount: "",
       OfflineAstroCount: "",
       busyAstroCount: "",
+      ActiveUser: "",
+      InActiveUser: "",
     };
   }
 
@@ -40,6 +42,14 @@ class AnalyticsDashboard extends React.Component {
     axiosConfig.get(`/user/busyAstroCount`).then((res) => {
       console.log(res?.data);
       this.setState({ busyAstroCount: res?.data?.count });
+    });
+    axiosConfig.get(`/user/inActiveUserCount`).then((res) => {
+      console.log(res?.data);
+      this.setState({ InActiveUser: res?.data?.count });
+    });
+    axiosConfig.get(`/user/activeUserCount`).then((res) => {
+      console.log(res?.data);
+      this.setState({ ActiveUser: res?.data?.count });
     });
   }
 
@@ -76,7 +86,7 @@ class AnalyticsDashboard extends React.Component {
                   </span>
                   <h2 className="ast-2">
                     Active Users
-                    <span className="ast-4">67</span>
+                    <span className="ast-4">{this.state.ActiveUser}</span>
                   </h2>
                 </div>
               </Col>
@@ -87,7 +97,7 @@ class AnalyticsDashboard extends React.Component {
                   </span>
                   <h2 className="ast-2">
                     Inactive Users
-                    <span className="ast-4">70</span>
+                    <span className="ast-4">{this.state.InActiveUser}</span>
                   </h2>
                 </div>
               </Col>
