@@ -21,6 +21,8 @@ const BannerPoojaList = lazy(() =>
 const AddBannerPooja = lazy(() =>
   import("./views/apps/event/bennerPooja/AddBannerPooja")
 );
+const AddNewpage = lazy(() => import("./views/apps/Addpages/AddnewPage"));
+const Addpages = lazy(() => import("./views/apps/Addpages/Addpages"));
 // const EventList = lazy(() => import("./views/apps/event/addEvent/EventList"));
 // const AddEvent = lazy(() => import("./views/apps/event/addEvent/AddEvent"));
 
@@ -149,6 +151,8 @@ const EditPrediction = lazy(() =>
 const ChatInTakeList = lazy(() =>
   import("./views/apps/chatintakeform/ChatInTakeList")
 );
+
+// pages add
 
 // rating and review
 const RatingList = lazy(() => import("./views/apps/reviewrating/RatingList"));
@@ -757,6 +761,9 @@ class AppRouter extends React.Component {
               path="/app/horoscopecategory/viewHoroscopeCategory/:id"
               component={ViewHoroscopeCategory}
             />
+            {/* add new pages */}
+            <AppRoute path="/app/pageslist" component={Addpages} />
+            <AppRoute path="/app/Addnewpage" component={AddNewpage} />
             {/*End Horoscope */}
             {/* Start Rashi */}
             <AppRoute

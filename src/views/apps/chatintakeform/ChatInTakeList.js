@@ -363,7 +363,7 @@ class ChatInTakeList extends React.Component {
                       Conversion in Take List
                     </h1>
                   </Col>
-                  <Col>
+                  {/* <Col>
                     <Route
                       render={({ history }) => (
                         <Button
@@ -376,7 +376,7 @@ class ChatInTakeList extends React.Component {
                         </Button>
                       )}
                     />
-                  </Col>
+                  </Col> */}
                 </Row>
                 <CardBody>
                   {this.state.rowData === null ? null : (

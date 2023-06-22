@@ -43,7 +43,7 @@ class ChatList extends React.Component {
               <Row className="m-2">
                 <Col lg="3" md="3" sm="12">
                   <label for="cars">
-                    <b>Select Aser</b>
+                    <b>Select User</b>
                   </label>
                   <select
                     onChange={(e) => {

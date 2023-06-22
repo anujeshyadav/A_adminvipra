@@ -17,126 +17,30 @@ class AnalyticsDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      total7sayplan: {},
-      bsicplan: {},
-      endtoend: {},
-      day7planearnig: {},
-      basicplanearning: {},
-      endtoendearning: {},
-      maneger: {},
-      dsm: {},
-      outherstaff: {},
-      // dealerTable: [],
+      userCount: "",
+      AstroCount: "",
+      OfflineAstroCount: "",
+      busyAstroCount: "",
     };
   }
 
   componentDidMount() {
-    // //dealer table
-    // axiosConfig
-    //   .get("/dealer/alldealers")
-    //   .then((response) => {
-    //     console.log(response.data);
-    //     //console.log(response.data.data);
-    //     this.setState({ dealerTable: response.data });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    // //end dealer //
-    axiosConfig
-      .get("/dealer/total7sayplan")
-      .then((response) => {
-        console.log(response.data);
-        //console.log(response.data.data);
-        this.setState({ total7sayplan: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    axiosConfig
-      .get("/dealer/totalvasicplan")
-      .then((response) => {
-        console.log(response.data);
-        //console.log(response.data.data);
-        this.setState({ bsicplan: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    axiosConfig
-      .get("/dealer/totalendtoendplan")
-      .then((response) => {
-        console.log(response.data);
-        //console.log(response.data.data);
-        this.setState({ endtoend: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    axiosConfig
-      .get("/dealer/total7dayplanearnig")
-      .then((response) => {
-        console.log(response.data);
-        console.log(response.data.Earning);
-        this.setState({ day7planearnig: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    axiosConfig
-      .get("/dealer/totalbasicplanearning")
-      .then((response) => {
-        console.log(response.data);
-        //console.log(response.data.data);
-        this.setState({ basicplanearning: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    axiosConfig
-      .get("dealer/endtoendearning")
-      .then((response) => {
-        console.log(response.data);
-        //console.log(response.data.data);
-        this.setState({ endtoendearning: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    axiosConfig
-      .get("/dealer/totalmaneger")
-      .then((response) => {
-        console.log(response.data);
-        //console.log(response.data.data);
-        this.setState({ maneger: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    axiosConfig
-      .get("/dealer/totaldsm")
-      .then((response) => {
-        console.log(response.data);
-        //console.log(response.data.data);
-        this.setState({ dsm: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    axiosConfig
-      .get("/dealer/totaloutherstaff")
-      .then((response) => {
-        console.log(response.data);
-        //console.log(response.data.data);
-        this.setState({ outherstaff: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    axiosConfig.get(`/user/userCount`).then((res) => {
+      // console.log(res?.data?.count);
+      this.setState({ userCount: res?.data?.count });
+    });
+    axiosConfig.get(`/user/onlineAstroCount`).then((res) => {
+      // console.log(res?.data);
+      this.setState({ AstroCount: res?.data?.count });
+    });
+    axiosConfig.get(`/user/offlineAstroCount`).then((res) => {
+      console.log(res?.data);
+      this.setState({ OfflineAstroCount: res?.data?.count });
+    });
+    axiosConfig.get(`/user/busyAstroCount`).then((res) => {
+      console.log(res?.data);
+      this.setState({ busyAstroCount: res?.data?.count });
+    });
   }
 
   render() {
@@ -161,7 +65,7 @@ class AnalyticsDashboard extends React.Component {
                   </span>
                   <h2 className="ast-2">
                     Total Users
-                    <span className="ast-4">500</span>
+                    <span className="ast-4">{this.state.userCount}</span>
                   </h2>
                 </div>
               </Col>
@@ -205,7 +109,11 @@ class AnalyticsDashboard extends React.Component {
                   </span>
                   <h2 className="ast-2">
                     Total
-                    <span className="ast-4">50</span>
+                    <span className="ast-4">
+                      {this.state.AstroCount +
+                        this.state.busyAstroCount +
+                        this.state.OfflineAstroCount}
+                    </span>
                   </h2>
                 </div>
               </Col>
@@ -216,7 +124,7 @@ class AnalyticsDashboard extends React.Component {
                   </span>
                   <h2 className="ast-2">
                     Online
-                    <span className="ast-4">37</span>
+                    <span className="ast-4">{this.state.AstroCount}</span>
                   </h2>
                 </div>
               </Col>
@@ -227,7 +135,7 @@ class AnalyticsDashboard extends React.Component {
                   </span>
                   <h2 className="ast-2">
                     Busy
-                    <span className="ast-4">07</span>
+                    <span className="ast-4">{this.state.busyAstroCount}</span>
                   </h2>
                 </div>
               </Col>
@@ -238,7 +146,9 @@ class AnalyticsDashboard extends React.Component {
                   </span>
                   <h2 className="ast-2">
                     Offline
-                    <span className="ast-4">07</span>
+                    <span className="ast-4">
+                      {this.state.OfflineAstroCount}
+                    </span>
                   </h2>
                 </div>
               </Col>

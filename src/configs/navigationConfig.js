@@ -289,6 +289,18 @@ const navigationConfig = [
     permissions: ["admin", "editor"],
     navLink: "/app/media/socialmedia",
   },
+  {
+    type: "groupHeader",
+    groupTitle: "Add Pages",
+  },
+  {
+    id: "Add Pages ",
+    title: "Add Pages",
+    type: "item",
+    icon: <Icon.List color="green" size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/pageslist",
+  },
 
   {
     type: "groupHeader",
