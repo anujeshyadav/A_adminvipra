@@ -40,119 +40,20 @@ class PayoutList extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 100,
+        width: 80,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
-
-      {
-        headerName: "Astrologer Name",
-        field: "fullname",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data?.astroId?.fullname}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Mobile No.",
-        field: "mobile",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data?.astroId?.mobile}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Payout Date",
-        field: "reason",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data?.updatedAt.split("T")[0]}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Amount",
-        field: "payout_amt",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data?.payout_amt}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Transaction ID",
-        field: "transactionId",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data?.transactionId}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Total Balance",
-        field: "reason",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data?.astroId?.callCharge}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Status",
-        field: "status",
-        filter: true,
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.status}</span>
-            </div>
-          );
-        },
-      },
-
       {
         headerName: "Action",
         field: "sortorder",
-        width: 200,
+        width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Route
+              {/* <Route
                 render={({ history }) => (
                   <Eye
                     className="mr-50"
@@ -165,14 +66,18 @@ class PayoutList extends React.Component {
                     }
                   />
                 )}
-              />
+              /> */}
               <Route
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
                     size="25px"
                     color="blue"
-                    onClick={() => history.push("/app/userride/editUserRide")}
+                    onClick={() =>
+                      history.push(
+                        `/app/report/editpayout/${params?.data?._id}`
+                      )
+                    }
                   />
                 )}
               />
@@ -190,7 +95,134 @@ class PayoutList extends React.Component {
           );
         },
       },
+      {
+        headerName: "Transaction ID",
+        field: "transactionId",
+        filter: true,
+        width: 160,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data?.transactionId}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Status",
+        field: "status",
+        filter: true,
+        width: 160,
+        cellRendererFramework: (params) => {
+          console.log(params.data);
+          return (
+            <div>
+              {params.data?.status === "Pending" ? (
+                <>
+                  <Button style={{ color: "black" }} color="warning" size="sm">
+                    Pending
+                  </Button>
+                </>
+              ) : (
+                <>
+                  {params.data.status === "Approved" ? (
+                    <>
+                      <Button color="success" size="sm">
+                        <b>Approved</b>
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button color="danger" size="sm">
+                        <b>Cancel</b>
+                      </Button>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+          );
+        },
+      },
+      {
+        headerName: " Requested Amount",
+        field: "payout_amt",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data?.reqsted_amt}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Total Earning",
+        field: "reason",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data?.astroId?.ownamount}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Astrologer Name",
+        field: "fullname",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data?.astroId?.fullname}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Mobile No.",
+        field: "mobile",
+        filter: true,
+        width: 160,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params.data?.astroId?.mobile}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Requested Date",
+        field: "reason",
+        filter: true,
+        width: 160,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data?.updatedAt.split("T")[0]}</span>
+            </div>
+          );
+        },
+      },
     ],
+  };
+  runthisfunction = (id) => {
+    axiosConfig
+      .get(`/admin/dltPayoutlist/${id}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   async componentDidMount() {
     // let { id } = this.props.match.params;
@@ -245,7 +277,7 @@ class PayoutList extends React.Component {
                       Payout List
                     </h1>
                   </Col>
-                  <Col>
+                  {/* <Col>
                     <Route
                       render={({ history }) => (
                         <Button
@@ -256,7 +288,7 @@ class PayoutList extends React.Component {
                         </Button>
                       )}
                     />
-                  </Col>
+                  </Col> */}
                 </Row>
                 <CardBody>
                   {this.state.rowData === null ? null : (

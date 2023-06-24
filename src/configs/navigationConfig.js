@@ -471,7 +471,7 @@ const navigationConfig = [
         type: "item",
         icon: <Icon.Circle size={12} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/status/daily",
+        navLink: "/app/Astrologer/Earningreport",
       },
     ],
   },

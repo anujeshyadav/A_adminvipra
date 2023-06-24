@@ -12,21 +12,18 @@ import {
   DropdownToggle,
 } from "reactstrap";
 import axiosConfig from "../../../axiosConfig";
-// import axios from "axios";
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
-//import classnames from "classnames";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-class AstrologerList extends React.Component {
+class AstrologerEarnReport extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
-    Commission: "",
     currenPageSize: "",
     getPageSize: "",
     defaultColDef: {
@@ -48,176 +45,83 @@ class AstrologerList extends React.Component {
       },
 
       {
-        headerName: "Name",
-        field: "fullname",
+        headerName: "Category Name",
+        field: "category",
         filter: true,
-        width: 120,
+        width: 180,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.fullname}</span>
+              <span>{params.data.product?.category?.name}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Email",
-        field: "email	",
+        headerName: "Commission Name",
+        field: "comision_name",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data.comision_name}</span>
+            </div>
+          );
+        },
+      },
+
+      {
+        headerName: "Product Name",
+        field: "productname",
         filter: true,
         width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.email}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Mobile No.",
-        field: "mobile",
-        filter: true,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.mobile}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Gender",
-        field: "gender",
-        filter: true,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.gender}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "DOB",
-        field: "dob",
-        filter: true,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.dob}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Primary Skills",
-        field: "primary_skills",
-        filter: true,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.primary_skills}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "All Skills",
-        field: "all_skills",
-        filter: true,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.all_skills}</span>
+              <span>{params.data.product?.productname}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Exprience",
-        field: "exp_in_years",
+        headerName: "Commission Rate(%)",
+        field: "comision_rate",
         filter: true,
-        width: 120,
+        width: 150,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.exp_in_years}</span>
+              <span>{params.data.comision_rate}</span>
             </div>
           );
-        },
-      },
-      {
-        headerName: "Language",
-        field: "language",
-        filter: true,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.language}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Call charge ",
-        field: "callCharge",
-        filter: true,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.callCharge}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Status",
-        field: "approvedstatus",
-        filter: true,
-        width: 100,
-        cellRendererFramework: (params) => {
-          return params.value === "true" ? (
-            <div className="badge badge-pill badge-success">
-              {params.data.approvedstatus}
-            </div>
-          ) : params.value === "false" ? (
-            <div className="badge badge-pill badge-warning">
-              {params.data.approvedstatus}
-            </div>
-          ) : null;
         },
       },
 
       {
         headerName: "Status",
         field: "status",
-        filter: true,
+        // filter: true,
         width: 100,
         cellRendererFramework: (params) => {
-          return params.value === "Online" ? (
+          return params.value === "Active" ? (
             <div className="badge badge-pill badge-success">
               {params.data.status}
             </div>
-          ) : params.value === "Offline" ? (
-            <div className="badge badge-pill badge-warning">
+          ) : params.value === "Inactive" ? (
+            <div className="badge badge-pill btn-primary">
               {params.data.status}
             </div>
           ) : null;
         },
       },
+
       {
         headerName: "Action",
         field: "sortorder",
-        width: 100,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
@@ -229,7 +133,7 @@ class AstrologerList extends React.Component {
                     color="green"
                     onClick={() =>
                       history.push(
-                        `/app/userride/viewUserRide/${params.data._id}`
+                        `/app/packagemanager/commissionview/${params.data._id}`
                       )
                     }
                   />
@@ -243,7 +147,7 @@ class AstrologerList extends React.Component {
                     color="blue"
                     onClick={() =>
                       history.push(
-                        `/app/astrology/editAstrologer/${params.data._id}`
+                        `/app/packagemanager/commissionedit/${params.data._id}`
                       )
                     }
                   />
@@ -266,24 +170,19 @@ class AstrologerList extends React.Component {
     ],
   };
   async componentDidMount() {
-    await axiosConfig.get("/admin/admin_astrop_list").then((response) => {
+    await axiosConfig.get(`/admin/comisionList`).then((response) => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
     });
   }
-
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/admin/dltAstro/${id}`).then(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    await axiosConfig.get(`/admin/dltComision/${id}`).then((response) => {
+      console.log(response);
+    });
   }
+
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -305,22 +204,6 @@ class AstrologerList extends React.Component {
       });
     }
   };
-  handleAddCommistion = (e) => {
-    e.preventDefault();
-    let payload = {
-      comm: this.state.Commission,
-    };
-    // axiosConfig
-    //   .post(``, payload)
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-  };
-  blockInvalidChar = (e) =>
-    ["e", "E", "+", "-"].includes(e.key) && e.preventDefault();
   render() {
     const { rowData, columnDefs, defaultColDef } = this.state;
     return (
@@ -328,9 +211,9 @@ class AstrologerList extends React.Component {
       (
         <div>
           <Breadcrumbs
-            breadCrumbTitle="Astrologer"
+            breadCrumbTitle="Astrologer Earning Report"
             breadCrumbParent="Home"
-            breadCrumbActive=" Astrologer "
+            breadCrumbActive="Earning Report"
           />
 
           <Row className="app-user-list">
@@ -338,55 +221,26 @@ class AstrologerList extends React.Component {
             <Col sm="12">
               <Card>
                 <Row className="m-2">
-                  <Col lg="3">
-                    <h1 sm="2" className="float-left">
-                      Astrologer List
+                  <Col>
+                    <h1 sm="6" className="float-left">
+                      Earning Report Astrologers
                     </h1>
                   </Col>
-
                   {/* <Col>
                     <Route
                       render={({ history }) => (
                         <Button
                           className=" btn btn-success float-right"
                           onClick={() =>
-                            history.push("/app/astrology/addAstrologer")
+                            history.push("/app/packagemanager/commissionadd")
                           }
                         >
-                          Add Astrologer
+                          Add
                         </Button>
                       )}
                     />
                   </Col> */}
                 </Row>
-                <div className="container">
-                  <Row>
-                    <Col lg="3">
-                      <h4 className="float-left">Set Admin Commission</h4>
-                      <h6 className="float-left">Present Commission : 10%</h6>
-                      {/* <h6></h6> */}
-                    </Col>
-                    <Col lg="4">
-                      <input
-                        onKeyDown={this.blockInvalidChar}
-                        type="number"
-                        value={this.state.Commission}
-                        onChange={(e) =>
-                          this.setState({ Commission: e.target.value })
-                        }
-                        className="form-control"
-                      />
-                    </Col>
-                    <Col lg="3">
-                      <Button
-                        onClick={(e) => this.handleAddCommistion(e)}
-                        color="primary"
-                      >
-                        Submit
-                      </Button>
-                    </Col>
-                  </Row>
-                </div>
                 <CardBody>
                   {this.state.rowData === null ? null : (
                     <div className="ag-theme-material w-100 my-2 ag-grid-table">
@@ -487,4 +341,4 @@ class AstrologerList extends React.Component {
     );
   }
 }
-export default AstrologerList;
+export default AstrologerEarnReport;

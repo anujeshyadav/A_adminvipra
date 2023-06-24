@@ -35,9 +35,9 @@ const Addpages = lazy(() => import("./views/apps/Addpages/Addpages"));
 // const EditBookEvent = lazy(() =>
 //   import("./views/apps/event/bookEvent/EditBookEvent")
 // );
-// const ViewBookEvent = lazy(() =>
-//   import("./views/apps/event/bookEvent/ViewBookEvent")
-// );
+const AstrologerEarnReport = lazy(() =>
+  import("./views/apps/packagemanager/AstrologerEarnReport")
+);
 
 // Route-based code splitting
 const analyticsDashboard = lazy(() =>
@@ -62,6 +62,7 @@ const EditUser = lazy(() => import("./views/apps/user/EditUser"));
 const CallDetails = lazy(() => import("./views/apps/report/CallDetails"));
 const RechargeReport = lazy(() => import("./views/apps/report/RechargeReport"));
 const PayoutList = lazy(() => import("./views/apps/report/PayoutList"));
+const EditPayout = lazy(() => import("./views/apps/report/EditPayout"));
 const PayoutAdd = lazy(() => import("./views/apps/report/PayputAdd"));
 const PayoutEdit = lazy(() => import("./views/apps/report/PayoutEdit"));
 
@@ -716,6 +717,11 @@ class AppRouter extends React.Component {
               path="/app/kundlimanage/kundlimatchlist"
               component={KundliMatchList}
             />
+            {/*kundli management */}
+            <AppRoute
+              path="/app/Astrologer/Earningreport"
+              component={AstrologerEarnReport}
+            />
             <AppRoute
               path="/app/kundlimanage/kundliuserdetail"
               component={KundliUserDetail}
@@ -1133,6 +1139,10 @@ class AppRouter extends React.Component {
             />
             <AppRoute path="/app/report/callDetails" component={CallDetails} />
             <AppRoute path="/app/report/payoutlist" component={PayoutList} />
+            <AppRoute
+              path="/app/report/editpayout/:id"
+              component={EditPayout}
+            />
             <AppRoute path="/app/report/payoutadd" component={PayoutAdd} />
             <AppRoute path="/app/report/payoutedit" component={PayoutEdit} />
             {/* Event */}
