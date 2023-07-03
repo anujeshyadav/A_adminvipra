@@ -24,7 +24,7 @@ const NavbarUser = () => {
 
   const tokenVerify = () => {
     let data = localStorage.getItem("ad-token");
-    console.log("token data", data);
+
     sessionStorage.clear();
     if (data === undefined || data === null) {
       window.location.replace("/#/pages/login");

@@ -17,6 +17,13 @@ class AnalyticsDashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      Allplans: "",
+      adminearning: "",
+      rechargelist: "",
+      packageoffer: "",
+      completecall: "",
+      failed: "",
+      Rejected: "",
       userCount: "",
       AstroCount: "",
       OfflineAstroCount: "",
@@ -36,20 +43,54 @@ class AnalyticsDashboard extends React.Component {
       this.setState({ AstroCount: res?.data?.count });
     });
     axiosConfig.get(`/user/offlineAstroCount`).then((res) => {
-      console.log(res?.data);
+      // console.log(res?.data);
       this.setState({ OfflineAstroCount: res?.data?.count });
     });
     axiosConfig.get(`/user/busyAstroCount`).then((res) => {
-      console.log(res?.data);
+      // console.log(res?.data);
       this.setState({ busyAstroCount: res?.data?.count });
     });
     axiosConfig.get(`/user/inActiveUserCount`).then((res) => {
-      console.log(res?.data);
+      // console.log(res?.data);
       this.setState({ InActiveUser: res?.data?.count });
     });
     axiosConfig.get(`/user/activeUserCount`).then((res) => {
-      console.log(res?.data);
+      // console.log(res?.data);
       this.setState({ ActiveUser: res?.data?.count });
+    });
+    axiosConfig.get(`/admin/adminCallHistory`).then((response) => {
+      let callhistory = response.data.data;
+      const completecall = callhistory.filter(
+        (value) => value?.Status === "completed"
+      );
+      const failed = callhistory.filter((value) => value?.Status === "failed");
+      const Rejected = callhistory.filter(
+        (value) => value?.Status === "rejected"
+      );
+
+      this.setState({ completecall: completecall?.length });
+      this.setState({ failed: failed?.length });
+      this.setState({ Rejected: Rejected?.length });
+    });
+    axiosConfig.get("/admin/allplans").then((response) => {
+      let Allplans = response.data?.data?.length;
+      // console.log(Allplans);
+      this.setState({ Allplans });
+    });
+    axiosConfig.get("/user/recharge_list").then((response) => {
+      let rechargelist = response.data?.data?.length;
+      // console.log(rechargelist);
+      this.setState({ rechargelist });
+    });
+    axiosConfig.get("/admin/getPackage").then((response) => {
+      let packageoffer = response.data?.data?.length;
+      // console.log(packageoffer);
+      this.setState({ packageoffer });
+    });
+    axiosConfig.get(`/admin/getAdminEarnings`).then((response) => {
+      let adminearning = response.data.data?.total;
+      // console.log(adminearning);
+      this.setState({ adminearning });
     });
   }
 
@@ -180,7 +221,7 @@ class AnalyticsDashboard extends React.Component {
                   </span>
                   <h2 className="ast-2">
                     Complete Call
-                    <span className="ast-4">37</span>
+                    <span className="ast-4">{this.state.completecall}</span>
                   </h2>
                 </div>
               </Col>
@@ -190,8 +231,8 @@ class AnalyticsDashboard extends React.Component {
                     <Icon.PhoneCall size={40} className="mr-50" />
                   </span>
                   <h2 className="ast-2">
-                    Reject Call
-                    <span className="ast-4">07</span>
+                    failed Call
+                    <span className="ast-4">{this.state.failed}</span>
                   </h2>
                 </div>
               </Col>
@@ -201,8 +242,8 @@ class AnalyticsDashboard extends React.Component {
                     <Icon.PhoneCall size={40} className="mr-50" />
                   </span>
                   <h2 className="ast-2">
-                    Minutes Call
-                    <span className="ast-4">07</span>
+                    Rejected Call
+                    <span className="ast-4">{this.state.Rejected}</span>
                   </h2>
                 </div>
               </Col>
@@ -219,16 +260,16 @@ class AnalyticsDashboard extends React.Component {
             <Row className="match-height">
               <Col md="4" className="mt-1 mb-1">
                 <div className="bg-s">
-                  <span className="ast-1">
-                    <Icon.DollarSign size={40} className="mr-50" />
+                  <span style={{ fontSize: "25px" }} className="ast-1 mt-1">
+                    <b>Rs</b>
                   </span>
                   <h2 className="ast-2">
                     Admin Earning
-                    <span className="ast-4">37545</span>
+                    <span className="ast-4">{this.state.adminearning}</span>
                   </h2>
                 </div>
               </Col>
-              <Col md="4" className="mt-1 mb-1">
+              {/* <Col md="4" className="mt-1 mb-1">
                 <div className="bg-p">
                   <span className="ast-1">
                     <Icon.DollarSign size={40} className="mr-50" />
@@ -238,8 +279,8 @@ class AnalyticsDashboard extends React.Component {
                     <span className="ast-4">07</span>
                   </h2>
                 </div>
-              </Col>
-              <Col md="4" className="mt-1 mb-1">
+              </Col> */}
+              {/* <Col md="4" className="mt-1 mb-1">
                 <div className="bg-u">
                   <span className="ast-1">
                     <Icon.DollarSign size={40} className="mr-50" />
@@ -249,7 +290,7 @@ class AnalyticsDashboard extends React.Component {
                     <span className="ast-4">07</span>
                   </h2>
                 </div>
-              </Col>
+              </Col> */}
             </Row>
           </CardBody>
         </Card>
@@ -268,7 +309,7 @@ class AnalyticsDashboard extends React.Component {
                   </span>
                   <h2 className="ast-2">
                     Total Offer
-                    <span className="ast-4">37545</span>
+                    <span className="ast-4">{this.state.packageoffer}</span>
                   </h2>
                 </div>
               </Col>
@@ -279,7 +320,7 @@ class AnalyticsDashboard extends React.Component {
                   </span>
                   <h2 className="ast-2">
                     Total Recharge
-                    <span className="ast-4">07</span>
+                    <span className="ast-4">{this.state.rechargelist}</span>
                   </h2>
                 </div>
               </Col>
@@ -290,14 +331,14 @@ class AnalyticsDashboard extends React.Component {
                   </span>
                   <h2 className="ast-2">
                     Total Package
-                    <span className="ast-4">07</span>
+                    <span className="ast-4">{this.state.Allplans}</span>
                   </h2>
                 </div>
               </Col>
             </Row>
           </CardBody>
         </Card>
-        <Row>
+        {/* <Row>
           <Col sm="12">
             <TodayAstrologerList />
           </Col>
@@ -310,7 +351,7 @@ class AnalyticsDashboard extends React.Component {
           <Col sm="12">
             <TodayCallHistory />
           </Col>
-        </Row>
+        </Row> */}
       </React.Fragment>
     );
   }

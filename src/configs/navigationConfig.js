@@ -291,7 +291,7 @@ const navigationConfig = [
   },
   {
     type: "groupHeader",
-    groupTitle: "Add Pages",
+    groupTitle: "Add Footer Pages",
   },
   {
     id: "Add Pages ",
@@ -348,38 +348,29 @@ const navigationConfig = [
     children: [
       {
         id: "callComplete",
-        title: "Complete Call",
+        title: "Call History",
         type: "item",
         icon: <Icon.PhoneIncoming size={12} />,
         permissions: ["admin", "editor"],
         navLink: "/app/callmanagement/completecall",
       },
+      // {
+      //   id: "callreject",
+      //   title: "Videocall history",
+      //   type: "item",
+      //   icon: <Icon.PhoneMissed size={12} />,
+      //   permissions: ["admin", "editor"],
+      //   navLink: "/app/callmanagement/callgreject",
+      // },
       {
-        id: "callreject",
-        title: "Reject Call",
+        id: "chatlist",
+        title: "Chat history",
         type: "item",
-        icon: <Icon.PhoneMissed size={12} />,
+        icon: <Icon.List color="green" size={20} />,
         permissions: ["admin", "editor"],
-        navLink: "/app/callmanagement/callgreject",
-      },
-      {
-        id: "calltansaction",
-        title: "Call Transac. History",
-        type: "item",
-        icon: <Icon.PhoneMissed size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "",
+        navLink: "/app/chat/chatList",
       },
     ],
-  },
-
-  {
-    id: "chatlist",
-    title: "Chat List",
-    type: "item",
-    icon: <Icon.List color="green" size={20} />,
-    permissions: ["admin", "editor"],
-    navLink: "/app/chat/chatList",
   },
 
   {
@@ -517,6 +508,15 @@ const navigationConfig = [
     icon: <FcMoneyTransfer color="" size={20} />,
     permissions: ["admin", "editor"],
     navLink: "/app/packagemanager/commission",
+  },
+  {
+    id: "commissionforall",
+    title: "My Commission ",
+    type: "item",
+    // icon: <Icon.DollarSign size={20} />,
+    icon: <FcMoneyTransfer color="" size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/packagemanager/commissioncall",
   },
   {
     id: "payouts",

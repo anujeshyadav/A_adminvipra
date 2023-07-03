@@ -47,8 +47,8 @@ export class EditPayout extends Component {
   };
   submitHandler = (e) => {
     e.preventDefault();
-    // console.log(this.state.Viewone?.reqsted_amt);
-    // console.log(this.state.status);
+    console.log(this.state.Viewone?.reqsted_amt);
+    console.log(this.state.status);
     if (this.state.status) {
       let payload = {
         // astroId: this.state.Viewone?.astroId?._id,

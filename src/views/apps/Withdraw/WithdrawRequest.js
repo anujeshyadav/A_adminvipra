@@ -45,56 +45,56 @@ class WithdrawRequest extends React.Component {
       },
 
       {
-        headerName: "Category Name",
+        headerName: "Astrologer Name",
         field: "category",
         filter: true,
         width: 180,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.product?.category?.name}</span>
+              <span>{params.data?.astroId?.fullname}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Withdraw Request Name",
+        headerName: "Date",
         field: "comision_name",
         filter: true,
         width: 180,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.comision_name}</span>
+              <span>{params.data?.createdAt?.split("T")[0]}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Product Name",
+        headerName: "Amount Requested",
         field: "productname",
         filter: true,
-        width: 120,
+        width: 200,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.product?.productname}</span>
+              <span>{params.data?.amount}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Withdraw Request Rate(%)",
+        headerName: "Total Balance",
         field: "commision_rate",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.commision_rate}</span>
+              <span>{params.data?.astroId?.ownamount}</span>
             </div>
           );
         },
@@ -106,11 +106,11 @@ class WithdrawRequest extends React.Component {
         // filter: true,
         width: 100,
         cellRendererFramework: (params) => {
-          return params.value === "Active" ? (
+          return params.data?.status === "Approved" ? (
             <div className="badge badge-pill badge-success">
               {params.data.status}
             </div>
-          ) : params.value === "Inactive" ? (
+          ) : params.value === "Pending" ? (
             <div className="badge badge-pill btn-primary">
               {params.data.status}
             </div>
@@ -125,7 +125,7 @@ class WithdrawRequest extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
-              <Route
+              {/* <Route
                 render={({ history }) => (
                   <Eye
                     className="mr-50"
@@ -138,8 +138,8 @@ class WithdrawRequest extends React.Component {
                     }
                   />
                 )}
-              />
-              <Route
+              /> */}
+              {/* <Route
                 render={({ history }) => (
                   <Edit
                     className="mr-50"
@@ -152,7 +152,7 @@ class WithdrawRequest extends React.Component {
                     }
                   />
                 )}
-              />
+              /> */}
               <Trash2
                 className="mr-50"
                 size="25px"
@@ -170,19 +170,23 @@ class WithdrawRequest extends React.Component {
     ],
   };
   async componentDidMount() {
-    await axiosConfig.get(`/admin/comisionList`).then((response) => {
+    await axiosConfig.get(`/user/withdrawal_list`).then((response) => {
       let rowData = response.data.data;
-      console.log(rowData);
+      // console.log(rowData);
       this.setState({ rowData });
     });
   }
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/admin/dltComision/${id}`).then((response) => {
-      console.log(response);
-    });
+    await axiosConfig.get(`g/admin/delcustomer/${id}`).then(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
-
   onGridReady = (params) => {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
@@ -226,7 +230,7 @@ class WithdrawRequest extends React.Component {
                       Withdraw Request List
                     </h1>
                   </Col>
-                  <Col>
+                  {/* <Col>
                     <Route
                       render={({ history }) => (
                         <Button
@@ -241,7 +245,7 @@ class WithdrawRequest extends React.Component {
                         </Button>
                       )}
                     />
-                  </Col>
+                  </Col> */}
                 </Row>
                 <CardBody>
                   {this.state.rowData === null ? null : (
@@ -294,7 +298,7 @@ class WithdrawRequest extends React.Component {
                           </UncontrolledDropdown>
                         </div>
                         <div className="d-flex flex-wrap justify-content-between mb-1">
-                          <div className=" mr-1">
+                          {/* <div className=" mr-1">
                             <Input
                               type="select"
                               name="select"
@@ -304,7 +308,7 @@ class WithdrawRequest extends React.Component {
                               <option>Complete</option>
                               <option>Reject</option>
                             </Input>
-                          </div>
+                          </div> */}
 
                           <div className="table-input mr-1">
                             <Input
