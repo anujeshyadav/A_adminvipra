@@ -35,27 +35,21 @@ class AnalyticsDashboard extends React.Component {
 
   componentDidMount() {
     axiosConfig.get(`/user/userCount`).then((res) => {
-      // console.log(res?.data?.count);
       this.setState({ userCount: res?.data?.count });
     });
     axiosConfig.get(`/user/onlineAstroCount`).then((res) => {
-      // console.log(res?.data);
       this.setState({ AstroCount: res?.data?.count });
     });
     axiosConfig.get(`/user/offlineAstroCount`).then((res) => {
-      // console.log(res?.data);
       this.setState({ OfflineAstroCount: res?.data?.count });
     });
     axiosConfig.get(`/user/busyAstroCount`).then((res) => {
-      // console.log(res?.data);
       this.setState({ busyAstroCount: res?.data?.count });
     });
     axiosConfig.get(`/user/inActiveUserCount`).then((res) => {
-      // console.log(res?.data);
       this.setState({ InActiveUser: res?.data?.count });
     });
     axiosConfig.get(`/user/activeUserCount`).then((res) => {
-      // console.log(res?.data);
       this.setState({ ActiveUser: res?.data?.count });
     });
     axiosConfig.get(`/admin/adminCallHistory`).then((response) => {
@@ -97,13 +91,6 @@ class AnalyticsDashboard extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {/* <Col lg="12" md="12">
-          <SalesCard />
-        </Col> */}
-        {/* <h3>Menbership Plans</h3> */}
-
-        {/* user Counetr start */}
-
         <Card>
           <CardTitle className="ast-3">Users</CardTitle>
           <hr></hr>
@@ -145,8 +132,6 @@ class AnalyticsDashboard extends React.Component {
             </Row>
           </CardBody>
         </Card>
-
-        {/* astrologer count */}
 
         <Card>
           <CardTitle className="ast-3">Astrologer</CardTitle>
@@ -269,33 +254,9 @@ class AnalyticsDashboard extends React.Component {
                   </h2>
                 </div>
               </Col>
-              {/* <Col md="4" className="mt-1 mb-1">
-                <div className="bg-p">
-                  <span className="ast-1">
-                    <Icon.DollarSign size={40} className="mr-50" />
-                  </span>
-                  <h2 className="ast-2">
-                    Astrologer Earning
-                    <span className="ast-4">07</span>
-                  </h2>
-                </div>
-              </Col> */}
-              {/* <Col md="4" className="mt-1 mb-1">
-                <div className="bg-u">
-                  <span className="ast-1">
-                    <Icon.DollarSign size={40} className="mr-50" />
-                  </span>
-                  <h2 className="ast-2">
-                    Minutes Call
-                    <span className="ast-4">07</span>
-                  </h2>
-                </div>
-              </Col> */}
             </Row>
           </CardBody>
         </Card>
-
-        {/* package counter */}
 
         <Card>
           <CardTitle className="ast-3">Package</CardTitle>

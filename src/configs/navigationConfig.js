@@ -339,10 +339,26 @@ const navigationConfig = [
       },
     ],
   },
+  {
+    id: "reportstatus",
+    title: "Product Earning Report",
+    type: "collapse",
+    icon: <Icon.List color="green" size={20} />,
+    children: [
+      {
+        id: "astroearning",
+        title: "Astrologer Earning",
+        type: "item",
+        icon: <Icon.Circle size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/Astrologer/Earningreport",
+      },
+    ],
+  },
 
   {
     id: "callstatus",
-    title: "Call Management",
+    title: "Earning Reports",
     type: "collapse",
     icon: <Icon.PhoneCall size={20} />,
     children: [
@@ -356,15 +372,23 @@ const navigationConfig = [
       },
       // {
       //   id: "callreject",
-      //   title: "Videocall history",
+      //   title: "Videocall Report",
       //   type: "item",
-      //   icon: <Icon.PhoneMissed size={12} />,
+      //   icon: <Icon.VideoOff size={12} />,
       //   permissions: ["admin", "editor"],
-      //   navLink: "/app/callmanagement/callgreject",
+      //   navLink: "/app/callmanagement/videocall",
       // },
       {
+        id: "chatreport",
+        title: "Chat/VideoCall Report",
+        type: "item",
+        icon: <Icon.List size={12} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/callmanagement/chatreport",
+      },
+      {
         id: "chatlist",
-        title: "Chat history",
+        title: "All Chats",
         type: "item",
         icon: <Icon.List color="green" size={20} />,
         permissions: ["admin", "editor"],
@@ -443,31 +467,6 @@ const navigationConfig = [
   // },
 
   {
-    id: "reportstatus",
-    title: "Report",
-    type: "collapse",
-    icon: <Icon.List color="green" size={20} />,
-    children: [
-      // {
-      //   id: "adminearning",
-      //   title: "Admin Recharge",
-      //   type: "item",
-      //   icon: <Icon.Circle size={12} />,
-      //   permissions: ["admin", "editor"],
-      //   navLink: "/app/status/statusList",
-      // },
-      {
-        id: "astroearning",
-        title: "Astrologer Earning",
-        type: "item",
-        icon: <Icon.Circle size={12} />,
-        permissions: ["admin", "editor"],
-        navLink: "/app/Astrologer/Earningreport",
-      },
-    ],
-  },
-
-  {
     id: "withdrawrequest",
     title: "Withdraw Request ",
     type: "item",
@@ -479,13 +478,13 @@ const navigationConfig = [
     id: "blogmngment",
     title: "Blog Management",
     type: "collapse",
-    icon: <Icon.Package color="ornage" size={20} />,
+    icon: <Icon.Package color="blue" size={20} />,
     children: [
       {
         id: "blogList",
         title: "Blog ",
         type: "item",
-        icon: <Icon.Video fill="red" size={20} />,
+        icon: <Icon.Image size={20} />,
         permissions: ["admin", "editor"],
         navLink: "/app/blogmngment/blog/blogList",
       },
@@ -493,7 +492,7 @@ const navigationConfig = [
         id: "blogCateList",
         title: "Blog Category",
         type: "item",
-        icon: <Icon.Video fill="red" size={20} />,
+        icon: <Icon.Image size={20} />,
         permissions: ["admin", "editor"],
         navLink: "/app/blogmngment/blogCategory/blogCateList",
       },

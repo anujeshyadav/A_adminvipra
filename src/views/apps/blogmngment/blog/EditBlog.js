@@ -26,12 +26,12 @@ export default class EditBlog extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      status: "",
       blog_title: "",
       desc: "",
       blogcategory: "",
       blogImg: "",
       editorState: EditorState.createEmpty(),
-
       selectedFile: undefined,
       selectedName: "",
     };
@@ -67,8 +67,8 @@ export default class EditBlog extends Component {
         this.setState({
           blog_title: response.data.data.blog_title,
           desc: response.data.data.desc,
-          img: response.data.data.img,
-          blogcategory: response.data.data.blogcategory,
+          blogImg: response?.data?.data?.blogImg,
+          blogcategory: response?.data?.data?.blogcategory?.name,
         });
       })
       .catch((error) => {
@@ -77,16 +77,14 @@ export default class EditBlog extends Component {
   }
   onChangeHandler = (event) => {
     this.setState({ selectedFile: event.target.files[0] });
-    this.setState({ selectedName: event.target.files[0].name });
-    console.log(event.target.files[0]);
   };
-  onChangeHandler = (event) => {
-    this.setState({ selectedFile: event.target.files });
-    this.setState({ selectedName: event.target.files.name });
-    console.log(event.target.files);
-  };
+  // onChangeHandler = (event) => {
+  //   this.setState({ selectedFile: event.target.files[0] });
+  //   this.setState({ selectedName: event.target.files.name });
+  // };
   changeHandler1 = (e) => {
     this.setState({ status: e.target.value });
+    // console.log(e.target.value);
   };
 
   changeHandler = (e) => {
@@ -95,29 +93,31 @@ export default class EditBlog extends Component {
 
   submitHandler = (e) => {
     e.preventDefault();
+    // name, status, desc,img
     const data = new FormData();
     data.append("blog_title", this.state.blog_title);
     data.append("desc", this.state.desc);
     data.append("blogcategory", this.state.blogcategory);
+    data.append("status", this.state.status);
 
-    for (const file of this.state.selectedFile) {
-      if (this.state.selectedFile !== null) {
-        data.append("blogImg", file, file.name);
-      }
+    // for (const file of this.state.selectedFile) {
+    if (this.state.selectedFile !== null) {
+      data.append("blogImg", this.state.selectedFile);
     }
-    for (var value of data.values()) {
-      console.log(value);
-    }
-    for (var key of data.keys()) {
-      console.log(key);
-    }
+    console.log(
+      this.state.blog_title,
+      this.state.desc,
+      this.state.blogcategory,
+      this.state.selectedFile
+    );
+    // }
+
     let { id } = this.props.match.params;
     axiosConfig
-      .post(`admin/edit_blog_cat/${id}`, data)
-
+      // .post(`admin/edit_blog_cat/${id}`, data)
+      .post(`admin/editBlog/${id}`, data)
       .then((response) => {
         console.log(response.data);
-
         swal("Success!", "Submitted SuccessFull!", "success");
         this.props.history.push("/app/blogmngment/blog/blogList");
       })
@@ -148,7 +148,7 @@ export default class EditBlog extends Component {
           <Row className="m-2">
             <Col>
               <h1 col-sm-6 className="float-left">
-                Edit Blog
+                Edit One Blogs
               </h1>
             </Col>
             <Col>
@@ -157,9 +157,7 @@ export default class EditBlog extends Component {
                   <Button
                     className=" btn btn-danger float-right"
                     onClick={() =>
-                      history.push(
-                        "/app/size/sizeList/app/blogmngment/blog/blogList"
-                      )
+                      history.push("/app/blogmngment/blog/blogList")
                     }
                   >
                     Back
@@ -183,7 +181,7 @@ export default class EditBlog extends Component {
                   ></Input>
                 </Col>
                 <Col lg="4" md="4" sm="4" className="mb-2">
-                  <Label>Blog Image</Label>
+                  <Label> add Blog Image</Label>
 
                   <CustomInput
                     type="file"
@@ -201,13 +199,22 @@ export default class EditBlog extends Component {
                     value={this.state.blogcategory}
                     onChange={this.changeHandler}
                   >
-                    <option>select blog category</option>
+                    <option>{this.state.blogcategory}</option>
+                    <option>---select blog category---</option>
                     {this.state.categoryB?.map((allCategory) => (
                       <option value={allCategory?._id} key={allCategory?._id}>
                         {allCategory?.name}
                       </option>
                     ))}
                   </CustomInput>
+                </Col>
+                <Col lg="4" md="4" sm="4" className="mb-2">
+                  <img
+                    src={this.state.blogImg}
+                    style={{ borderRadius: "10px" }}
+                    width="200px"
+                    height="200px"
+                  />
                 </Col>
                 <Col lg="12" md="12" sm="12" className="mb-2">
                   <Label>Description</Label>
@@ -253,6 +260,26 @@ export default class EditBlog extends Component {
                   />
                   <br />
                 </Col>
+              </Row>
+              <Row>
+                <div onChange={this.changeHandler1} className="mb-3">
+                  <label>Active</label>
+                  <input
+                    defaultChecked
+                    type="radio"
+                    className="mx-2"
+                    name="status"
+                    value="Active"
+                  />
+
+                  <label>Deactive</label>
+                  <input
+                    type="radio"
+                    name="status"
+                    className="mx-2"
+                    value="Deactive"
+                  />
+                </div>
               </Row>
               <Row>
                 <Col lg="6" md="6" sm="6" className="mb-2">

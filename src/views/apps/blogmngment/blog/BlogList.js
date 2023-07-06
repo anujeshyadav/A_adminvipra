@@ -94,6 +94,23 @@ class BlogList extends React.Component {
           );
         },
       },
+      {
+        headerName: "Status",
+        field: "status",
+        filter: true,
+        width: 140,
+        cellRendererFramework: (params) => {
+          return params.data.status === "Active" ? (
+            <div className="badge badge-pill badge-success">
+              {params.data.status}
+            </div>
+          ) : params.value === "Deactive" ? (
+            <div className="badge badge-pill badge-warning">
+              {params.data.status}
+            </div>
+          ) : null;
+        },
+      },
 
       {
         headerName: "Description",
@@ -108,23 +125,6 @@ class BlogList extends React.Component {
           );
         },
       },
-      // {
-      //   headerName: "Status",
-      //   field: "status",
-      //   // filter: true,
-      //   width: 130,
-      //   cellRendererFramework: (params) => {
-      //     return params.value === "Active" ? (
-      //       <div className="badge badge-pill badge-success">
-      //         {params.data.status}
-      //       </div>
-      //     ) : params.value === "Deactive" ? (
-      //       <div className="badge badge-pill badge-warning">
-      //         {params.data.status}
-      //       </div>
-      //     ) : null;
-      //   },
-      // },
 
       {
         headerName: "Actions",

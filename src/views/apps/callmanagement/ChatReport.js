@@ -11,17 +11,19 @@ import {
   DropdownItem,
   DropdownToggle,
 } from "reactstrap";
-import axios from "axios";
-import axiosConfig from "../../../axiosConfig";
+// import axiosConfig from "../../../axiosConfig";
+
 import { ContextLayout } from "../../../utility/context/Layout";
 import { AgGridReact } from "ag-grid-react";
 import { Eye, Edit, Trash2, ChevronDown } from "react-feather";
+import axiosConfig from "../../../axiosConfig";
+//import classnames from "classnames";
 import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
 
-class CompleteCall extends React.Component {
+class ChatReport extends React.Component {
   state = {
     rowData: [],
     paginationPageSize: 20,
@@ -38,39 +40,22 @@ class CompleteCall extends React.Component {
         headerName: "S.No",
         valueGetter: "node.rowIndex + 1",
         field: "node.rowIndex + 1",
-        width: 90,
+        width: 100,
         filter: true,
         // checkboxSelection: true,
         // headerCheckboxSelectionFilteredOnly: true,
         // headerCheckboxSelection: true,
       },
+
       {
-        headerName: "Status",
-        field: "Status",
+        headerName: "User Name",
+        field: "customername",
         filter: true,
         width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
-              {/* <Button size="sm" color="primary"> */}
-              <span>
-                <b>{params.data?.Status}</b>
-              </span>
-              {/* </Button> */}
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Customer Name",
-        field: "customername",
-        filter: true,
-        width: 180,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data?.userid?.fullname}</span>
+              <span>{params.data?.userId?.fullname}</span>
             </div>
           );
         },
@@ -78,161 +63,119 @@ class CompleteCall extends React.Component {
 
       {
         headerName: "Astrologer Name",
-        field: "astrologername	",
+        field: "astrologername",
         filter: true,
         width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data?.astroid?.fullname}</span>
+              <span>{params?.data?.astroId?.fullname}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Call Type",
+        field: "type",
+        filter: true,
+        width: 140,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params?.data?.type}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Astro Credit",
+        field: "type",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params?.data?.astroCredited}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Admin Credit",
+        field: "type",
+        filter: true,
+        width: 180,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params?.data?.adminCredited}</span>
             </div>
           );
         },
       },
       {
         headerName: "Date",
-        field: "time",
+        field: "date",
         filter: true,
-        width: 170,
+        width: 180,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data?.DateCreated}</span>
+              <span>{params?.data?.createdAt.split("T")[0]}</span>
             </div>
           );
         },
       },
 
       // {
-      //   headerName: "From No",
-      //   field: "from",
-      //   filter: true,
-      //   width: 140,
+      //   headerName: "Action",
+      //   field: "sortorder",
+      //   width: 200,
       //   cellRendererFramework: (params) => {
       //     return (
-      //       <div>
-      //         <span>{params.data?.From}</span>
+      //       <div className="actions cursor-pointer">
+      //         <Route
+      //           render={({ history }) => (
+      //             <Eye
+      //               className="mr-50"
+      //               size="25px"
+      //               color="green"
+      //               onClick={() =>
+      //                 history.push(
+      //                   `/app/userride/viewUserRide/${params.data._id}`
+      //                 )
+      //               }
+      //             />
+      //           )}
+      //         />
+      //         <Route
+      //           render={({ history }) => (
+      //             <Edit
+      //               className="mr-50"
+      //               size="25px"
+      //               color="blue"
+      //               onClick={() => history.push("/app/userride/editUserRide")}
+      //             />
+      //           )}
+      //         />
+      //         <Trash2
+      //           className="mr-50"
+      //           size="25px"
+      //           color="red"
+      //           onClick={() => {
+      //             let selectedData = this.gridApi.getSelectedRows();
+      //             this.runthisfunction(params.data._id);
+      //             this.gridApi.updateRowData({ remove: selectedData });
+      //           }}
+      //         />
       //       </div>
       //     );
       //   },
       // },
-      // {
-      //   headerName: "To Number",
-      //   field: "To",
-      //   filter: true,
-      //   width: 140,
-      //   cellRendererFramework: (params) => {
-      //     return (
-      //       <div>
-      //         <span>{params.data?.To}</span>
-      //       </div>
-      //     );
-      //   },
-      // },
-      {
-        headerName: "Duration",
-        field: "To",
-        filter: true,
-        width: 120,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data?.Duration} Sec</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Total Earning",
-        field: "callamount",
-        filter: true,
-        width: 160,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{parseInt(params.data?.userdeductedAmt)}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Astro Earning",
-        field: "callamount",
-        filter: true,
-        width: 160,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data?.astroCredited.toFixed(2)}</span>
-            </div>
-          );
-        },
-      },
-      {
-        headerName: "Admin Earning",
-        field: "callamount",
-        filter: true,
-        width: 160,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data?.adminCredited.toFixed(2)}</span>
-            </div>
-          );
-        },
-      },
-
-      {
-        headerName: "Action",
-        field: "sortorder",
-        width: 200,
-        cellRendererFramework: (params) => {
-          return (
-            <div className="actions cursor-pointer">
-              {/* <Route
-                render={({ history }) => (
-                  <Eye
-                    className="mr-50"
-                    size="25px"
-                    color="green"
-                    onClick={() =>
-                      history.push(
-                        `/app/userride/viewUserRide/${params.data._id}`
-                      )
-                    }
-                  />
-                )}
-              /> */}
-              {/* <Route
-                render={({ history }) => (
-                  <Edit
-                    className="mr-50"
-                    size="25px"
-                    color="blue"
-                    onClick={() => history.push("/app/userride/editUserRide")}
-                  />
-                )}
-              /> */}
-              <Trash2
-                className="mr-50"
-                size="25px"
-                color="red"
-                onClick={() => {
-                  let selectedData = this.gridApi.getSelectedRows();
-                  this.runthisfunction(params.data?._id);
-                  this.gridApi.updateRowData({ remove: selectedData });
-                }}
-              />
-            </div>
-          );
-        },
-      },
     ],
   };
   async componentDidMount() {
-    let { id } = this.props.match.params;
-
-    await axiosConfig.get(`/admin/adminCallHistory`).then((response) => {
+    await axiosConfig.get(`/admin/adminVedioChathistory`).then((response) => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
@@ -241,7 +184,7 @@ class CompleteCall extends React.Component {
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/user/dlCallHistory/${id}`).then(
+    await axiosConfig.get(`/admin/delcustomer/${id}`).then(
       (response) => {
         console.log(response);
       },
@@ -278,9 +221,9 @@ class CompleteCall extends React.Component {
       (
         <div>
           <Breadcrumbs
-            breadCrumbTitle="Complete Call"
-            breadCrumbParent="Call Management"
-            breadCrumbActive=" Complete Call "
+            breadCrumbTitle="Chat/Video Report"
+            breadCrumbParent="Chat/Video "
+            breadCrumbActive=" Chat/Video Report"
           />
 
           <Row className="app-user-list">
@@ -290,9 +233,23 @@ class CompleteCall extends React.Component {
                 <Row className="m-2">
                   <Col>
                     <h1 sm="6" className="float-left">
-                      Call Status
+                      Chat/Video Report
                     </h1>
                   </Col>
+                  {/* <Col>
+                  <Route
+                    render={({ history }) => (
+                      <Button
+                        className=" btn btn-success float-right"
+                        onClick={() =>
+                          history.push("/app/astrology/addAstrologer")
+                        }
+                      >
+                        Add
+                      </Button>
+                    )}
+                  />
+                </Col> */}
                 </Row>
                 <CardBody>
                   {this.state.rowData === null ? null : (
@@ -394,4 +351,4 @@ class CompleteCall extends React.Component {
     );
   }
 }
-export default CompleteCall;
+export default ChatReport;

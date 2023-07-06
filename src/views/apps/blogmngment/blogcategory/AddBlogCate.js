@@ -125,7 +125,7 @@ export default class AddBlogCate extends Component {
                   <Button
                     className=" btn btn-success float-right"
                     onClick={() =>
-                      history.push("/app/blogmngment/blogcategory/blogCateList")
+                      history.push("/app/blogmngment/blogCategory/blogCateList")
                     }
                   >
                     Back

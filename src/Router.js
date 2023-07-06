@@ -134,9 +134,10 @@ const CompleteCall = lazy(() =>
 const CallHistroy = lazy(() =>
   import("./views/apps/callmanagement/CallHistory")
 );
-const CallReject = lazy(() =>
+const Videocall = lazy(() =>
   import("./views/apps/callmanagement/CallReject.js")
 );
+const ChatReport = lazy(() => import("./views/apps/callmanagement/ChatReport"));
 // prediction
 const PredictionList = lazy(() =>
   import("./views/apps/prediction/PredictionList")
@@ -856,8 +857,12 @@ class AppRouter extends React.Component {
               component={CompleteCall}
             />
             <AppRoute
-              path="/app/callmanagement/callgreject"
-              component={CallReject}
+              path="/app/callmanagement/videocall"
+              component={Videocall}
+            />
+            <AppRoute
+              path="/app/callmanagement/chatreport"
+              component={ChatReport}
             />
             {/* coupons */}
             <AppRoute path="/app/coupons/couponslist" component={CouponsList} />

@@ -29,7 +29,18 @@ export default class AddBanner extends Component {
       banner_img: "",
       selectedFile: undefined,
       selectedName: "",
+      pages: [],
     };
+  }
+  componentDidMount() {
+    axiosConfig
+      .get(`/admin/getPages`)
+      .then((res) => {
+        this.setState({ pages: res.data.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   onChangeHandler = (event) => {
     this.setState({ selectedFile: event.target.files[0] });
@@ -67,13 +78,8 @@ export default class AddBanner extends Component {
     for (var key of data.keys()) {
       console.log(key);
     }
-
     axiosConfig
       .post("admin/addbanner", data)
-      // headers: { )
-      //   "auth-adtoken": localStorage.getItem("auth-adtoken"),
-      // },
-
       .then((response) => {
         console.log(response);
         swal("Success!", "Submitted SuccessFull!", "success");
@@ -140,14 +146,44 @@ export default class AddBanner extends Component {
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Add Route</Label>
-                  <Input
+                  <select
+                    className="form-control"
+                    // required
+                    name="root"
+                    value={this.state.root}
+                    onChange={this.changeHandler}
+                  >
+                    <option value="">-Select--</option>
+                    <option value="kundaliform">Match Making</option>
+                    <option value="allastrologerlist">
+                      All Astrologer List
+                    </option>
+                    <option value="liveAstrologer">LiveStreaming </option>
+                    <option value="manglikdosh">Manglikdosh</option>
+                    <option value="pitraDosh">PitraDosh</option>
+                    <option value="kalsharpDosh">kalsharpDosh</option>
+                    <option value="heroscopestwo">Daily Horoscope</option>
+                    <option value="heroscopestwo1">Weekly Horoscope</option>
+                    <option value="heroscopestwo2">Monthly Horoscope</option>
+                    <option value="astromallList">AstromallList</option>
+                    <option value="bookEvent">Book Pooja</option>
+                    <option value="basicPanchang">BasicPanchang</option>
+                    <option value="todayPanchang">TodayPanchang</option>
+                    <option value="aboutdetail">About Us</option>
+                    <option value="contact">Contact Us</option>
+                    <option value="TermsOfUse">TermsOfUse</option>
+                    <option value="privacyPolicy">PrivacyPolicy</option>
+                    <option value="blog-no-sidebar">Blogs</option>
+                    <option value="Faq">Faq</option>
+                  </select>
+                  {/* <Input
                     required
                     type="text"
                     name="root"
                     placeholder=""
                     value={this.state.root}
                     onChange={this.changeHandler}
-                  ></Input>
+                  ></Input> */}
                 </Col>
                 <Col lg="6" md="6" sm="6" className="mb-2">
                   <Label>Image</Label>
