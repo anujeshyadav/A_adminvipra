@@ -68,7 +68,7 @@ const AddBookEvent = () => {
   const handleProductChange = (index, e) => {
     const { name, value } = e.target;
     const view = [...product];
-    console.log("View", view);
+
     view[index][name] = value;
     setProduct(view);
   };
@@ -477,7 +477,7 @@ const AddBookEvent = () => {
               })}
 
               <Col lg="12" md="12" sm="12" className="mb-2">
-                <Label>Benefits</Label>
+                <Label>Benefits *</Label>
                 <Input
                   required
                   type="textarea"

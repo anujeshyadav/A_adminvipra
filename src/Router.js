@@ -73,6 +73,9 @@ const AddEvent = lazy(() => import("./views/apps/event/addEvent/AddEvent"));
 const BookEventList = lazy(() =>
   import("./views/apps/event/bookEvent/BookEventList")
 );
+const BookedpoojaList = lazy(() =>
+  import("./views/apps/event/bookEvent/Bookedpoojalist")
+);
 const AddBookEvent = lazy(() =>
   import("./views/apps/event/bookEvent/AddBookEvent")
 );
@@ -692,6 +695,10 @@ class AppRouter extends React.Component {
             <AppRoute
               path="/app/event/bookEvent/bookEventList"
               component={BookEventList}
+            />
+            <AppRoute
+              path="/app/event/bookEvent/bookedpoojalist"
+              component={BookedpoojaList}
             />
             <AppRoute
               path="/app/event/bookEvent/addBookEvent"

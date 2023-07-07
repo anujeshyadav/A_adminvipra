@@ -256,6 +256,14 @@ const navigationConfig = [
     icon: <Icon.BarChart2 size={20} />,
     children: [
       {
+        id: "booked pooja ",
+        title: "Pooja Booked",
+        type: "item",
+        icon: <Icon.Box color="green" size={20} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/event/bookEvent/bookedpoojalist",
+      },
+      {
         id: "bannerPoojaLista",
         title: "Banner Pooja List",
         type: "item",
