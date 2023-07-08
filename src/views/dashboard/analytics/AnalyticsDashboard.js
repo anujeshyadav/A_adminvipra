@@ -1,12 +1,9 @@
 import React from "react";
 import { Row, Col, Card, CardTitle, CardText, CardBody } from "reactstrap";
-import SalesCard from "./SalesCard";
-import DispatchedOrders from "./DispatchedOrders";
-import Notification from "./Notification";
+
 import axiosConfig from "../../../axiosConfig";
 import "../../../assets/scss/pages/dashboard-analytics.scss";
-import axios from "axios";
-// import { Icon } from "leaflet";
+
 import * as Icon from "react-feather";
 import TodayAstrologerList from "../../apps/dashboardlist/TodayAstrologerList";
 import TodayCustomerList from "../../apps/dashboardlist/TodayCustomerList";

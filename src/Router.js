@@ -89,6 +89,7 @@ const ViewBookEvent = lazy(() =>
 const AllOrderList = lazy(() =>
   import("./views/apps/ordermanage/AllOrderLList")
 );
+const editorder = lazy(() => import("./views/apps/ordermanage/EditOne"));
 
 //Wallet//
 const WalletTransaction = lazy(() =>
@@ -1193,6 +1194,10 @@ class AppRouter extends React.Component {
             <AppRoute
               path="/app/ordermanage/allorderlist"
               component={AllOrderList}
+            />
+            <AppRoute
+              path="/app/ordermanage/editorder/:id"
+              component={editorder}
             />
             {/* wallet */}
             <AppRoute

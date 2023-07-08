@@ -23,7 +23,7 @@ const navigationConfig = [
 
   {
     id: "user",
-    title: "User Management ",
+    title: "Profile Management ",
     type: "collapse",
     icon: <Icon.Users color="green" size={20} />,
     children: [
@@ -37,7 +37,7 @@ const navigationConfig = [
       },
       {
         id: "astrologerList",
-        title: "Astrologer",
+        title: "Astrologer List",
         type: "item",
         icon: <Icon.User color="blue" size={12} />,
         permissions: ["admin", "editor"],

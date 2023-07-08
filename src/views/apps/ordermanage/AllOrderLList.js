@@ -219,7 +219,7 @@ class AllOrderList extends React.Component {
                     color="blue"
                     onClick={() =>
                       history.push(
-                        `/app/astrology/editAstrologer/${params.data._id}`
+                        `/app/ordermanage/editorder/${params.data._id}`
                       )
                     }
                   />
@@ -309,7 +309,7 @@ class AllOrderList extends React.Component {
                     All Orders
                   </h1>
                 </Col>
-                <Col>
+                {/* <Col>
                   <Route
                     render={({ history }) => (
                       <Button
@@ -322,7 +322,7 @@ class AllOrderList extends React.Component {
                       </Button>
                     )}
                   />
-                </Col>
+                </Col> */}
               </Row>
               <CardBody>
                 {this.state.rowData === null ? null : (

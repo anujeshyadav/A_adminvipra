@@ -221,6 +221,7 @@ class SocialMedia extends React.Component {
                     <option>Facebook</option>
                     <option>Twitter</option>
                     <option>Instagram</option>
+                    <option>LinkedIn</option>
                     <option>Youtube</option>
                   </CustomInput>
                 </Col>
