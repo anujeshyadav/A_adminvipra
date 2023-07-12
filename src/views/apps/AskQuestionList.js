@@ -47,68 +47,98 @@ class AskQuestionList extends React.Component {
       },
 
       {
-        headerName: "Name",
-        field: "fullname",
+        headerName: "Question",
+        field: "desc",
+        filter: true,
+        width: 220,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data?.desc}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Reply",
+        field: "Reply",
         filter: true,
         width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.userid?.fullname}</span>
+              {params?.data?.reply && <span>{params?.data?.reply}</span>}
+              {!params?.data?.reply && (
+                <span>
+                  {" "}
+                  <Button
+                    onClick={() =>
+                      this.props.history.push({
+                        pathname: `/app/replyanswer/${params.data._id}`,
+                        state: params.data,
+                      })
+                    }
+                    size="sm"
+                    color="primary"
+                  >
+                    Reply
+                  </Button>
+                </span>
+              )}
             </div>
           );
         },
       },
 
       {
-        headerName: "Mobile No.",
-        field: "mobile",
+        headerName: "subject",
+        field: "subject",
         filter: true,
         width: 120,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.userid?.mobile}</span>
+              <span>{params.data?.subject}</span>
             </div>
           );
         },
       },
       {
-        headerName: "DOB",
-        field: "dob",
+        headerName: "UserName",
+        field: "username",
         filter: true,
         width: 100,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.userid?.dob}</span>
+              <span>{params.data?.userid?.fullname}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "User Question",
-        field: "question",
+        headerName: "ticketNo",
+        field: "ticketNo",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              <span>{params.data.question}</span>
+              <span>{params.data?.ticketNo}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Answer For Question",
-        field: "answer",
+        headerName: "Created At",
+        field: "Created at",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.answer}</span>
+              <span>{params.data?.createdAt.split("T")[0]}</span>
             </div>
           );
         },
@@ -131,7 +161,7 @@ class AskQuestionList extends React.Component {
       {
         headerName: "Actions",
         field: "sortorder",
-        width: 100,
+        width: 160,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
@@ -143,12 +173,12 @@ class AskQuestionList extends React.Component {
                     color="green"
                     onClick={() =>
                       history.push(
-                        `/app/userride/viewUserRide/${params.data._id}`,
+                        `/app/userride/viewUserRide/${params.data._id}`
                       )
                     }
                   />
                 )}
-              />
+              /> */}
               <Route
                 render={({ history }) => (
                   <ExternalLink
@@ -156,13 +186,14 @@ class AskQuestionList extends React.Component {
                     size="25px"
                     color="blue"
                     onClick={() =>
-                      history.push(
-                        `/app/askquestion/userQuestionReply/${params.data._id}`,
-                      )
+                      this.props.history.push({
+                        pathname: `/app/replyanswer/${params.data._id}`,
+                        state: params.data,
+                      })
                     }
                   />
                 )}
-              /> */}
+              />
               <Trash2
                 className="mr-50"
                 size="25px"
@@ -182,18 +213,16 @@ class AskQuestionList extends React.Component {
   async componentDidMount() {
     let { astroid } = this.props.match.params;
 
-    await axiosConfig
-      .get(`/user/astro_ques_list/${astroid}`)
-      .then((response) => {
-        let rowData = response?.data?.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get(`admin/ticketList`).then((response) => {
+      let rowData = response?.data?.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
 
   async runthisfunction(id) {
     console.log(id);
-    await axiosConfig.get(`/user/dlt_ask_qus/${id}`).then(
+    await axiosConfig.get(`/admin/dltTicket/${id}`).then(
       (response) => {
         console.log(response);
       },

@@ -216,6 +216,28 @@ const navigationConfig = [
     permissions: ["admin", "editor"],
     navLink: "/app/ordermanage/allorderlist",
   },
+
+  {
+    type: "groupHeader",
+    groupTitle: "Add Notification",
+  },
+  {
+    id: "Add Notification",
+    title: "Add notification",
+    type: "collapse",
+    icon: <Icon.List size={20} />,
+    children: [
+      {
+        id: "Add notification",
+        title: "Notification List",
+        type: "item",
+        icon: <Icon.List size={20} />,
+        permissions: ["admin", "editor"],
+        navLink: "/app/pagesetup/notification/notifiList",
+      },
+    ],
+  },
+
   {
     type: "groupHeader",
     groupTitle: " Event",
@@ -310,6 +332,18 @@ const navigationConfig = [
     navLink: "/app/pageslist",
   },
 
+  {
+    type: "groupHeader",
+    groupTitle: "User Ticket Q.estion ",
+  },
+  {
+    id: "askQuestionList",
+    title: "Users Question",
+    type: "item",
+    icon: <Icon.MessageCircle color="red" size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/askQuestionList",
+  },
   {
     type: "groupHeader",
     groupTitle: "Porduct Management",
@@ -413,15 +447,6 @@ const navigationConfig = [
     permissions: ["admin", "editor"],
     navLink: "/app/chatintakeform/chatintakelist",
   },
-
-  // {
-  //   id: 'askQuestionList',
-  //   title: 'All users Question List',
-  //   type: 'item',
-  //   icon: <Icon.MessageCircle size={20} />,
-  //   permissions: ['admin', 'editor'],
-  //   navLink: '/app/askQuestionList',
-  // },
 
   {
     id: "rechargepackage",

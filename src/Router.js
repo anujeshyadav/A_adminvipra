@@ -223,6 +223,7 @@ const KundliUserDetail = lazy(() =>
 
 //ask Question list
 const AskQuestionList = lazy(() => import("./views/apps/AskQuestionList"));
+const ReplyAnswer = lazy(() => import("./views/apps/ReplyAnswer"));
 
 // Start Horoscope Category
 const HoroscopeCategoryList = lazy(() =>
@@ -1152,6 +1153,7 @@ class AppRouter extends React.Component {
             />
             {/* ask quiestion list */}
             <AppRoute path="/app/askQuestionList" component={AskQuestionList} />
+            <AppRoute path="/app/replyanswer/:id" component={ReplyAnswer} />
             {/* report */}
             <AppRoute
               path="/app/report/rechargeReport"
