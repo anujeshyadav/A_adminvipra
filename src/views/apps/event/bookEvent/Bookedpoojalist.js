@@ -53,7 +53,33 @@ class Bookedpoojalist extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.pooja_type?.pooja_name}</span>
+              <span>{params.data?.pujaId?.pooja_type?.pooja_name}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "User Name",
+        field: "customername",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data?.userid?.fullname}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "User No.",
+        field: "customername",
+        filter: true,
+        width: 200,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data?.userid?.mobile}</span>
             </div>
           );
         },
@@ -67,15 +93,15 @@ class Bookedpoojalist extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
-              {params.data.poojaimg.map((i) => (
-                <img
-                  className=" rounded-circle  mr-3"
-                  src={i}
-                  alt="user avatar"
-                  height="40"
-                  width="40"
-                />
-              ))}
+              {/* {params.data.poojaimg.map((i) => ( */}
+              <img
+                className=" rounded-circle  mr-3"
+                src={params.data?.pujaId?.poojaimg}
+                alt="user avatar"
+                height="40"
+                width="40"
+              />
+              {/* ))} */}
             </div>
           );
         },
@@ -88,7 +114,7 @@ class Bookedpoojalist extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.pooja_price}</span>
+              <span>{params.data?.pujaId?.pooja_price}</span>
             </div>
           );
         },
@@ -108,94 +134,146 @@ class Bookedpoojalist extends React.Component {
         },
       },
       {
-        headerName: "City",
+        headerName: "Address",
         field: "city",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.city}</span>
+              <span>{params.data?.address}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Date Selected",
+        field: "date",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data?.date}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Addon Product",
+        field: "addonProduct",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data?.productId?.length}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Selected Slot",
+        field: "addonProduct",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data?.slots}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Status",
+        field: "status",
+        filter: true,
+        width: 150,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params.data?.status}</span>
             </div>
           );
         },
       },
 
       {
-        headerName: "Location  ",
+        headerName: "Total Amount  ",
         field: "location",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data.location}</span>
+              <span>{params.data?.totalamt}</span>
             </div>
           );
         },
       },
-      {
-        headerName: "Current Location  ",
-        field: "fullfill_location",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.fullfill_location}</span>
-            </div>
-          );
-        },
-      },
+      // {
+      //   headerName: "Current Location  ",
+      //   field: "fullfill_location",
+      //   filter: true,
+      //   width: 150,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div>
+      //         <span>{params.data.fullfill_location}</span>
+      //       </div>
+      //     );
+      //   },
+      // },
 
-      {
-        headerName: "Benefits  ",
-        field: "benefits",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.benefits}</span>
-            </div>
-          );
-        },
-      },
+      // {
+      //   headerName: "Benefits  ",
+      //   field: "benefits",
+      //   filter: true,
+      //   width: 150,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div>
+      //         <span>{params.data.benefits}</span>
+      //       </div>
+      //     );
+      //   },
+      // },
 
-      {
-        headerName: "Duration  ",
-        field: "duration",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.duration}</span>
-            </div>
-          );
-        },
-      },
+      // {
+      //   headerName: "Duration  ",
+      //   field: "duration",
+      //   filter: true,
+      //   width: 150,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div>
+      //         <span>{params.data.duration}</span>
+      //       </div>
+      //     );
+      //   },
+      // },
 
-      {
-        headerName: "Time Slot  ",
-        field: "time_slots",
-        filter: true,
-        width: 150,
-        cellRendererFramework: (params) => {
-          return (
-            <div>
-              <span>{params.data.time_slots}</span>
-            </div>
-          );
-        },
-      },
+      // {
+      //   headerName: "Time Slot  ",
+      //   field: "time_slots",
+      //   filter: true,
+      //   width: 150,
+      //   cellRendererFramework: (params) => {
+      //     return (
+      //       <div>
+      //         <span>{params.data.time_slots}</span>
+      //       </div>
+      //     );
+      //   },
+      // },
       {
         headerName: "Live Streaming",
         field: "liveStreaming",
         filter: true,
         width: 150,
         cellRendererFramework: (params) => {
-          return params.data.liveStreaming === true ? (
+          return params.data?.pujaId?.liveStreaming === true ? (
             <div className="badge badge-pill badge-success">
               <span>{"Available"}</span>
             </div>
@@ -222,7 +300,7 @@ class Bookedpoojalist extends React.Component {
                     color="green"
                     onClick={() =>
                       history.push(
-                        `/app/event/bookEvent/viewBookEvent/${params.data._id}`
+                        `/app/event/bookEvent/viewOnebookedpooja/${params.data._id}`
                       )
                     }
                   />
@@ -236,7 +314,7 @@ class Bookedpoojalist extends React.Component {
                     color="blue"
                     onClick={() =>
                       history.push(
-                        `/app/event/bookEvent/editBookEvent/${params.data._id}`
+                        `/app/event/bookEvent/viewOnebookedpooja/${params.data._id}`
                       )
                     }
                   />
@@ -261,7 +339,13 @@ class Bookedpoojalist extends React.Component {
   async componentDidMount() {
     // let { id } = this.props.match.params;
 
-    await axiosConfig.get(`/admin/get_adminevent`).then((response) => {
+    // await axiosConfig.get(`/admin/get_adminevent`).then((response) => {
+    //   let rowData = response.data.data;
+    //   console.log(rowData);
+    //   this.setState({ rowData });
+    // });
+
+    await axiosConfig.get(`/admin/bookedPujaList`).then((response) => {
       let rowData = response.data.data;
       console.log(rowData);
       this.setState({ rowData });
@@ -319,7 +403,7 @@ class Bookedpoojalist extends React.Component {
                 <Row className="m-2">
                   <Col>
                     <h1 sm="6" className="float-left">
-                      Puja Type List
+                      Booked Pooja list
                     </h1>
                   </Col>
                   <Col>

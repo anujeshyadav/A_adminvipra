@@ -85,6 +85,9 @@ const EditBookEvent = lazy(() =>
 const ViewBookEvent = lazy(() =>
   import("./views/apps/event/bookEvent/ViewBookEvent")
 );
+const ViewOneBookedPooja = lazy(() =>
+  import("./views/apps/event/bookEvent/ViewOneBookedPooja")
+);
 // order
 const AllOrderList = lazy(() =>
   import("./views/apps/ordermanage/AllOrderLList")
@@ -718,6 +721,10 @@ class AppRouter extends React.Component {
             <AppRoute
               path="/app/event/bookEvent/viewBookEvent/:id"
               component={ViewBookEvent}
+            />
+            <AppRoute
+              path="/app/event/bookEvent/viewOnebookedpooja/:id"
+              component={ViewOneBookedPooja}
             />
             {/* Astrologer */}
             {/* productmanager  */}

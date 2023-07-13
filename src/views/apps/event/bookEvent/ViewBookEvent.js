@@ -81,24 +81,50 @@ class ViewHoroscopeCategory extends React.Component {
             <CardBody className="pb-0">
               <Row className="mb-5 mt-2">
                 <Col md="6" sm="12" className="mb-4">
-                  <h4>Enent Name</h4>
+                  <h4>Event Name</h4>
                   <h6 className="">
                     {" "}
-                    {this.state.data.event_list?.event_name}
+                    {this.state.data?.pooja_type?.pooja_name}
                   </h6>
                 </Col>
-                <Col md="6" sm="12" className="mb-4">
+                {/* <Col md="6" sm="12" className="mb-4">
                   <h4>Price OnLine</h4>
                   <h6 className=""> {this.state.data.price_online}</h6>
+                </Col> */}
+                <Col md="6" sm="12" className="mb-4">
+                  <h4>City</h4>
+                  <h6 className=""> {this.state.data?.city}</h6>
                 </Col>
                 <Col md="6" sm="12" className="mb-4">
-                  <h4>Price OffLine</h4>
-                  <h6 className=""> {this.state.data.price_offline}</h6>
+                  <h4>Price</h4>
+                  <h6 className=""> {this.state.data?.pooja_price} Rs</h6>
                 </Col>
 
                 <Col md="6" sm="12" className="mb-4">
+                  <h4>Duration</h4>
+                  <h6 className="">
+                    {" "}
+                    {ReactHtmlParser(this.state.data?.duration)}
+                  </h6>
+                </Col>
+                <Col md="6" sm="12" className="mb-4">
                   <h4>Description</h4>
                   <h6 className=""> {ReactHtmlParser(this.state.data.desc)}</h6>
+                </Col>
+                <Col md="6" sm="12" className="mb-4">
+                  <h4>Fulfil Location</h4>
+                  <h6 className="">
+                    {" "}
+                    {ReactHtmlParser(this.state.data?.fullfill_location)}
+                  </h6>
+                </Col>
+                <Col md="6" sm="12" className="mb-4">
+                  <h4>pooja Image</h4>
+                  <img
+                    width="250px"
+                    src={this.state.data?.poojaimg}
+                    alt="image"
+                  />
                 </Col>
               </Row>
             </CardBody>

@@ -215,7 +215,7 @@ class AstrologerList extends React.Component {
       {
         headerName: "Action",
         field: "sortorder",
-        width: 100,
+        width: 180,
         cellRendererFramework: (params) => {
           return (
             <div className="actions cursor-pointer">
@@ -254,7 +254,7 @@ class AstrologerList extends React.Component {
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);
-                  this.gridApi.updateRowData({ remove: selectedData });
+                  // this.gridApi.updateRowData({ remove: selectedData });
                 }}
               />
             </div>
@@ -275,15 +275,33 @@ class AstrologerList extends React.Component {
   }
 
   async runthisfunction(id) {
-    console.log(id);
-    await axiosConfig.get(`/admin/dltAstro/${id}`).then(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
+    swal(
+      `Sure You Want To Delete It`,
+      "Delete Or Cancel",
+
+      {
+        buttons: {
+          cancel: "Cancel",
+          catch: { text: "Delete ", value: "delete" },
+        },
       }
-    );
+    ).then((value) => {
+      switch (value) {
+        case "delete":
+          axiosConfig.get(`/admin/dltAstro/${id}`).then(
+            (response) => {
+              this.componentDidMount();
+              console.log(response);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+          break;
+        default:
+          break;
+      }
+    });
   }
   onGridReady = (params) => {
     this.gridApi = params.api;

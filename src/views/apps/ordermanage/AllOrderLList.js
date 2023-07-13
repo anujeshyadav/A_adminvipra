@@ -21,6 +21,7 @@ import "../../../assets/scss/plugins/tables/_agGridStyleOverride.scss";
 import "../../../assets/scss/pages/users.scss";
 import { Route } from "react-router-dom";
 import Breadcrumbs from "../../../components/@vuexy/breadCrumbs/BreadCrumb";
+import swal from "sweetalert";
 
 class AllOrderList extends React.Component {
   state = {
@@ -232,7 +233,7 @@ class AllOrderList extends React.Component {
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
                   this.runthisfunction(params.data._id);
-                  this.gridApi.updateRowData({ remove: selectedData });
+                  // this.gridApi.updateRowData({ remove: selectedData });
                 }}
               />
             </div>
@@ -258,15 +259,33 @@ class AllOrderList extends React.Component {
   }
 
   async runthisfunction(id) {
-    console.log(id);
-    await axiosConfig.get(`/admin/dltOrder/${id}`).then(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.log(error);
+    swal(
+      `Sure You Want To Delete It`,
+      "Delete Or Cancel",
+
+      {
+        buttons: {
+          cancel: "Cancel",
+          catch: { text: "Delete ", value: "delete" },
+        },
       }
-    );
+    ).then((value) => {
+      switch (value) {
+        case "delete":
+          axiosConfig
+            .get(`/admin/dltOrder/${id}`)
+            .then((response) => {
+              this.componentDidMount();
+              console.log(response);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+
+        default:
+          break;
+      }
+    });
   }
   onGridReady = (params) => {
     this.gridApi = params.api;

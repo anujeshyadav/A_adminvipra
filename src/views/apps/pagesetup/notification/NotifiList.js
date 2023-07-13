@@ -60,6 +60,20 @@ class NotifiList extends React.Component {
           );
         },
       },
+      {
+        headerName: "Notify To",
+        field: "User",
+        // filter: true,
+        width: 250,
+        // pinned: window.innerWidth > 992 ? "left" : false,
+        cellRendererFramework: (params) => {
+          return (
+            <div className="d-flex align-items-center cursor-pointer">
+              <span>{params?.data?.userid?.fullname}</span>
+            </div>
+          );
+        },
+      },
 
       {
         headerName: "Description",
@@ -134,17 +148,11 @@ class NotifiList extends React.Component {
   };
 
   async componentDidMount() {
-    await axiosConfig
-      .get(`/admin/admin_notification`, {
-        // headers: {
-        //   "auth-adtoken": localStorage.getItem("auth-adtoken"),
-        // },
-      })
-      .then((response) => {
-        const rowData = response.data.data;
-        console.log(rowData);
-        this.setState({ rowData });
-      });
+    await axiosConfig.get(`/admin/admin_notification`).then((response) => {
+      const rowData = response.data.data;
+      console.log(rowData);
+      this.setState({ rowData });
+    });
   }
   async runthisfunction(id) {
     console.log(id);
