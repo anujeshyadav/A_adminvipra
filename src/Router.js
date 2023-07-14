@@ -92,6 +92,7 @@ const ViewOneBookedPooja = lazy(() =>
 const AllOrderList = lazy(() =>
   import("./views/apps/ordermanage/AllOrderLList")
 );
+const Refundlist = lazy(() => import("./views/apps/ordermanage/RefundApplied"));
 const editorder = lazy(() => import("./views/apps/ordermanage/EditOne"));
 
 //Wallet//
@@ -1203,6 +1204,11 @@ class AppRouter extends React.Component {
             <AppRoute
               path="/app/ordermanage/allorderlist"
               component={AllOrderList}
+            />
+            {/* refund */}
+            <AppRoute
+              path="/app/ordermanage/refundlist"
+              component={Refundlist}
             />
             <AppRoute
               path="/app/ordermanage/editorder/:id"

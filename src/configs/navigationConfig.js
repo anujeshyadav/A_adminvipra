@@ -205,6 +205,19 @@ const navigationConfig = [
 
   {
     type: "groupHeader",
+    groupTitle: "Applied Refund",
+  },
+
+  {
+    id: "refund applied",
+    title: "Refund Applied",
+    type: "item",
+    icon: <Icon.List color="green" size={20} />,
+    permissions: ["admin", "editor"],
+    navLink: "/app/ordermanage/refundlist",
+  },
+  {
+    type: "groupHeader",
     groupTitle: "Order Management",
   },
 
