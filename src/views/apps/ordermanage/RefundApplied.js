@@ -65,7 +65,7 @@ class RefundApplied extends React.Component {
         headerName: "Email",
         field: "email	",
         filter: true,
-        width: 120,
+        width: 140,
         cellRendererFramework: (params) => {
           return (
             <div className="d-flex align-items-center cursor-pointer">
@@ -185,7 +185,7 @@ class RefundApplied extends React.Component {
         headerName: "Refung Reason",
         field: "status",
         filter: true,
-        width: 120,
+        width: 180,
         cellRendererFramework: (params) => {
           return (
             <div>
