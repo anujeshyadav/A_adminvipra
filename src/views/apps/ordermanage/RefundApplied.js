@@ -48,7 +48,7 @@ class RefundApplied extends React.Component {
       },
 
       {
-        headerName: "Name",
+        headerName: "UserName",
         field: "fullname",
         filter: true,
         width: 120,
@@ -92,7 +92,7 @@ class RefundApplied extends React.Component {
         headerName: "Product Name",
         field: "productname",
         filter: true,
-        width: 120,
+        width: 180,
         cellRendererFramework: (params) => {
           return (
             <div>
@@ -277,7 +277,7 @@ class RefundApplied extends React.Component {
       switch (value) {
         case "delete":
           axiosConfig
-            .get(`/admin/dltOrder/${id}`)
+            .get(`/user/dltRefund/${id}`)
             .then((response) => {
               this.componentDidMount();
               console.log(response);
