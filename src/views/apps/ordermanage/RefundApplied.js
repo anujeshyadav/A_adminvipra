@@ -96,7 +96,7 @@ class RefundApplied extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data?.product?.product?.productname}</span>
+              <span>{params.data?.orderid?.product?.product?.productname}</span>
             </div>
           );
         },
@@ -110,7 +110,7 @@ class RefundApplied extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params.data?.product?.price}</span>
+              <span>{params.data?.orderid?.product?.product?.price}</span>
             </div>
           );
         },
@@ -124,26 +124,78 @@ class RefundApplied extends React.Component {
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params?.data?.orderId}</span>
+              <span>{params?.data?.orderid?.orderId}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Date",
-        field: "date",
+        headerName: "GST",
+        field: "total amount",
         filter: true,
         width: 120,
         cellRendererFramework: (params) => {
           return (
             <div>
-              <span>{params?.data?.date}</span>
+              <span>{params?.data?.orderid?.cartId?.gst}</span>
             </div>
           );
         },
       },
       {
-        headerName: "Status",
+        headerName: "TotalAmount",
+        field: "total amount",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params?.data?.orderid?.cartId?.total_amt}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "AstroName",
+        field: "status",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params?.data?.orderid?.astroid?.fullname}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Product Status",
+        field: "status",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params?.data?.orderid?.status}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Refung Reason",
+        field: "status",
+        filter: true,
+        width: 120,
+        cellRendererFramework: (params) => {
+          return (
+            <div>
+              <span>{params?.data?.reason}</span>
+            </div>
+          );
+        },
+      },
+      {
+        headerName: "Refung Status",
         field: "status",
         filter: true,
         width: 120,
@@ -220,7 +272,7 @@ class RefundApplied extends React.Component {
                     color="blue"
                     onClick={() =>
                       history.push(
-                        `/app/ordermanage/editorder/${params.data._id}`
+                        `/app/ordermanage/editorder/${params.data?._id}`
                       )
                     }
                   />
@@ -232,7 +284,7 @@ class RefundApplied extends React.Component {
                 color="red"
                 onClick={() => {
                   let selectedData = this.gridApi.getSelectedRows();
-                  this.runthisfunction(params.data._id);
+                  this.runthisfunction(params?.data?._id);
                   // this.gridApi.updateRowData({ remove: selectedData });
                 }}
               />
@@ -257,8 +309,8 @@ class RefundApplied extends React.Component {
     //   this.setState({ rowData: response.data.data });
     // });
     axiosConfig.get("/admin/adminRefundList").then((response) => {
-      console.log(response.data.data);
-      this.setState({ rowData: response.data.data });
+      console.log(response.data);
+      this.setState({ rowData: response?.data });
     });
   }
 
