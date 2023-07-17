@@ -195,7 +195,7 @@ class RefundApplied extends React.Component {
         },
       },
       {
-        headerName: "Refung Status",
+        headerName: "Refund Status",
         field: "status",
         filter: true,
         width: 120,
@@ -271,9 +271,9 @@ class RefundApplied extends React.Component {
                     size="25px"
                     color="blue"
                     onClick={() =>
-                      history.push(
-                        `/app/ordermanage/editorder/${params.data?._id}`
-                      )
+                      history.push({
+                        pathname: `/app/ordermanage/editrefund/${params.data?._id}`,
+                      })
                     }
                   />
                 )}
@@ -329,6 +329,7 @@ class RefundApplied extends React.Component {
       switch (value) {
         case "delete":
           axiosConfig
+            // .get(`/user/dltRefund/${id}`)
             .get(`/user/dltRefund/${id}`)
             .then((response) => {
               this.componentDidMount();
